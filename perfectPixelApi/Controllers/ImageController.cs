@@ -45,6 +45,13 @@ namespace perfectPixelApi.Controllers
 
             return image;
         }
+        [HttpPost]
+        public async Task<ActionResult<Image>> PostImage(Image image)
+        {
+            _context.MonthImages.Add(image);
+            await _context.SaveChangesAsync();
 
+            return CreatedAtAction(nameof(GetFirstImageOfTheMonth), new { id = image.Id }, image);
+        }
     }
 }
