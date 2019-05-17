@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace perfectPixelApi.Models
 {
-    public class MonthImage
+    public class Image
     {
         public long Id { get; set; }
         public string Month { get; set; }
