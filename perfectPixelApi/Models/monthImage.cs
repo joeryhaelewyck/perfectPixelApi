@@ -9,6 +9,6 @@ namespace perfectPixelApi.Models
     {
         public long Id { get; set; }
         public string Month { get; set; }
-        public string Image { get; set; }
+        public string ImageName { get; set; }
     }
 }
