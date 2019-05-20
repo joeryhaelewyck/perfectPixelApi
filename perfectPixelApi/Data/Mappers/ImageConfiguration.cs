@@ -23,8 +23,8 @@ namespace perfectPixelApi.Data.Mappers
             builder.Property(I => I.Month)
                 .HasColumnName("MONTH")
                 .IsRequired();
-            builder.Property(I => I.Score)
-                .HasColumnName("SCORE");
+            builder.Property(I => I.AverageScore)
+                .HasColumnName("AVERAGESCORE");
             builder.Property(I => I.Image)
                 .HasColumnName("IMAGE");
         }

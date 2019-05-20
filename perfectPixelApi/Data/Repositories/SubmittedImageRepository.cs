@@ -45,7 +45,7 @@ namespace perfectPixelApi.Data.Repositories
         public SubmittedImage GetImageByHighScoreByMonth(int month)
         {
             var images = this.GetImagesByMonth(month);
-            return images.OrderByDescending(i => i.Score).First();
+            return images.OrderByDescending(i => i.AverageScore).First();
         }
 
         public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
