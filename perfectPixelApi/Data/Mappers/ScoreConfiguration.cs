@@ -13,7 +13,7 @@ namespace perfectPixelApi.Data.Mappers
         public void Configure(EntityTypeBuilder<Score> builder)
         {
             //Table name
-            builder.ToTable("Scores");
+            builder.ToTable("Score");
             //Primary Key
             builder.HasKey(I => I.Id);
             //Properties
@@ -21,7 +21,7 @@ namespace perfectPixelApi.Data.Mappers
                 .HasColumnName("IDSUBMITTEDIMAGE")
                 .IsRequired();
             builder.Property(I => I.ImageScore)
-                .HasColumnName("MONTH")
+                .HasColumnName("IMAGESCORE")
                 .IsRequired();
             builder.Property(I => I.Voter)
                 .HasColumnName("VOTER")

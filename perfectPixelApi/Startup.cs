@@ -27,6 +27,7 @@ namespace perfectPixelApi
                 opt.UseSqlServer(Configuration.GetConnectionString("ImageContext")));
 
             services.AddScoped<ISubmittedImageRepository, SubmittedImageRepository>();
+            services.AddScoped<IScoreRepository, ScoreRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

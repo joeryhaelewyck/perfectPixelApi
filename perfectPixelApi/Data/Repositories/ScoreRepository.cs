@@ -1,13 +1,22 @@
-﻿using perfectPixelApi.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using perfectPixelApi.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace perfectPixelApi.Data.Repositories
 {
     public class ScoreRepository : IScoreRepository
     {
+
+        private readonly ImageContext _dbContext;
+        private readonly DbSet<Score> _scores;
+
+        public ScoreRepository(ImageContext dbContext)
+        {
+            _dbContext = dbContext;
+            _scores = dbContext.Scores;
+        }
         public void Add(Score score)
         {
             throw new NotImplementedException();
@@ -20,12 +29,13 @@ namespace perfectPixelApi.Data.Repositories
 
         public IEnumerable<Score> GetAll()
         {
-            throw new NotImplementedException();
+            var scores = _scores.AsQueryable();
+            return scores.OrderBy(i => i.Id).ToList();
         }
 
         public Score GetById(int id)
         {
-            throw new NotImplementedException();
+            return _scores.SingleOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Score> GetByVoter(string name)
