@@ -34,17 +34,23 @@ namespace perfectPixelApi.Data.Repositories
 
         public SubmittedImage GetById(long id)
         {
-            throw new System.NotImplementedException();
+            return _images.SingleOrDefault(i => i.Id == id);
         }
 
-        public SubmittedImage GetByName(string name)
+        public IEnumerable<SubmittedImage> GetByName(string name)
         {
-            throw new System.NotImplementedException();
+            return _images.Where(i => i.Name == name);
         }
 
-        public IEnumerable<SubmittedImage> GetImagesByMonth(string month)
+        public SubmittedImage GetImageByHighScoreByMonth(int month)
         {
-            throw new System.NotImplementedException();
+            var images = this.GetImagesByMonth(month);
+            return images.OrderByDescending(i => i.Score).First();
+        }
+
+        public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
+        {
+            return _images.Where(i => i.Month == month).AsQueryable();
         }
 
         public void SaveChanges()

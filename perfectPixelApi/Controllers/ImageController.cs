@@ -13,40 +13,54 @@ namespace perfectPixelApi.Controllers
 {
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
-    [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
     {
         private readonly ISubmittedImageRepository _imageRepository;
-   
+  
         public ImageController(ISubmittedImageRepository context)
         {
             _imageRepository = context;
         
         }
         [HttpGet]
+        [Route("api/[controller]")]
         public IEnumerable<SubmittedImage> GetImages()
         {
-            var images = _imageRepository.GetAll();
-            if(images == null)
-            {
-               List<SubmittedImage> fakeList = new List<SubmittedImage>();
-            }
-            return images;
+            return _imageRepository.GetAll();
         }
         [HttpGet("{id}")]
+        [Route("api/[controller]/{id}")]
         public ActionResult<SubmittedImage> GetImage(long id)
         {
             var image =  _imageRepository.GetById(id);
-
             if (image == null)
             {
                 return NotFound();
             }
-
             return image;
         }
-        
+        [HttpGet]
+        [Route("api/[controller]/month/{month}")]
+        public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
+        {
+            return _imageRepository.GetImagesByMonth(month);
+            
+        }
+        [HttpGet]
+        [Route("api/[controller]/name/{name}")]
+        public IEnumerable<SubmittedImage> GetImagesByName(string name)
+        {
+            return _imageRepository.GetByName(name);
+
+        }
+        [HttpGet]
+        [Route("api/[controller]/highscore/{month}")]
+        public ActionResult<SubmittedImage> GetImageWithHighestScoreForCertainMonth(int month)
+        {
+            return _imageRepository.GetImageByHighScoreByMonth(month);
+
+        }
         //[HttpPost]
         //public async Task<ActionResult<SubmittedImage>> PostImage(SubmittedImage image)
         //{
