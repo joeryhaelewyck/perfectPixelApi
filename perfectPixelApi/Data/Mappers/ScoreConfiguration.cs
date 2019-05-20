@@ -8,25 +8,24 @@ using System.Threading.Tasks;
 
 namespace perfectPixelApi.Data.Mappers
 {
-    public class ImageConfiguration : IEntityTypeConfiguration<SubmittedImage>
+    public class ScoreConfiguration : IEntityTypeConfiguration<Score>
     {
-        public void Configure(EntityTypeBuilder<SubmittedImage> builder)
+        public void Configure(EntityTypeBuilder<Score> builder)
         {
             //Table name
-            builder.ToTable("SubmittedImage");
+            builder.ToTable("Scores");
             //Primary Key
             builder.HasKey(I => I.Id);
             //Properties
-            builder.Property(I => I.Name)
-                .HasColumnName("NAME")
+            builder.Property(I => I.Idsubmittedimage)
+                .HasColumnName("IDSUBMITTEDIMAGE")
                 .IsRequired();
-            builder.Property(I => I.Month)
+            builder.Property(I => I.ImageScore)
                 .HasColumnName("MONTH")
                 .IsRequired();
-            builder.Property(I => I.Averagescore)
-                .HasColumnName("AVERAGESCORE");
-            builder.Property(I => I.Image)
-                .HasColumnName("IMAGE");
+            builder.Property(I => I.Voter)
+                .HasColumnName("VOTER")
+                .IsRequired();
         }
     }
 }

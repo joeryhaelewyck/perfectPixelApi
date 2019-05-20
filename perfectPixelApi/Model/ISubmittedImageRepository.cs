@@ -4,7 +4,7 @@ namespace perfectPixelApi.Model
 {
     public interface ISubmittedImageRepository
     {
-        SubmittedImage GetById(long id);
+        SubmittedImage GetById(int id);
         IEnumerable<SubmittedImage> GetByName(string name);
         IEnumerable<SubmittedImage> GetAll();
         IEnumerable<SubmittedImage> GetImagesByMonth(int month);

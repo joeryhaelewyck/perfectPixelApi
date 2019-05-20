@@ -12,8 +12,10 @@ namespace perfectPixelApi.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
+            modelBuilder.ApplyConfiguration(new ScoreConfiguration());
 
         }
         public DbSet<SubmittedImage> Images { get; set; }
+        public DbSet<Score> Scores { get; set; }
     }
 }

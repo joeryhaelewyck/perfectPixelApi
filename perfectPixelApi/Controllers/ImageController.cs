@@ -31,7 +31,7 @@ namespace perfectPixelApi.Controllers
         }
         [HttpGet("{id}")]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> GetImage(long id)
+        public ActionResult<SubmittedImage> GetImage(int id)
         {
             var image =  _imageRepository.GetById(id);
             if (image == null)

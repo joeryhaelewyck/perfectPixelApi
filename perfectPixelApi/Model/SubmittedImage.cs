@@ -16,7 +16,7 @@ namespace perfectPixelApi.Model
         [Column("MONTH")]
         public byte Month { get; set; }
         [Column("AVERAGESCORE")]
-        public byte? AverageScore { get; set; }
+        public byte? Averagescore { get; set; }
         [Column("IMAGE", TypeName = "image")]
         public byte[] Image { get; set; }
     }

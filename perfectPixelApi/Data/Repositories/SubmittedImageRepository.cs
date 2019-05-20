@@ -32,7 +32,7 @@ namespace perfectPixelApi.Data.Repositories
             return images.OrderBy(i => i.Name).ToList();
         }
 
-        public SubmittedImage GetById(long id)
+        public SubmittedImage GetById(int id)
         {
             return _images.SingleOrDefault(i => i.Id == id);
         }
@@ -45,7 +45,7 @@ namespace perfectPixelApi.Data.Repositories
         public SubmittedImage GetImageByHighScoreByMonth(int month)
         {
             var images = this.GetImagesByMonth(month);
-            return images.OrderByDescending(i => i.AverageScore).First();
+            return images.OrderByDescending(i => i.Averagescore).First();
         }
 
         public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
