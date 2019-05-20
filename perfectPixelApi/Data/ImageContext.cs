@@ -5,7 +5,6 @@ namespace perfectPixelApi.Data
 {
     public class ImageContext : DbContext
     {
-        public DbSet<SubmittedImage> Images { get; set; }
         public ImageContext(DbContextOptions<ImageContext> options) : base(options)
         {
         }
@@ -13,6 +12,8 @@ namespace perfectPixelApi.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
+
         }
+        public DbSet<SubmittedImage> Images { get; set; }
     }
 }

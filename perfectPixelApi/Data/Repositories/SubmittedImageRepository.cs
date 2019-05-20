@@ -28,7 +28,8 @@ namespace perfectPixelApi.Data.Repositories
 
         public IEnumerable<SubmittedImage> GetAll()
         {
-            return _images.ToList();
+            var images = _images.AsQueryable();
+            return images.OrderBy(i => i.Name).ToList();
         }
 
         public SubmittedImage GetById(long id)

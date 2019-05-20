@@ -27,7 +27,12 @@ namespace perfectPixelApi.Controllers
         [HttpGet]
         public IEnumerable<SubmittedImage> GetImages()
         {
-            return _imageRepository.GetAll();
+            var images = _imageRepository.GetAll();
+            if(images == null)
+            {
+               List<SubmittedImage> fakeList = new List<SubmittedImage>();
+            }
+            return images;
         }
         [HttpGet("{id}")]
         public ActionResult<SubmittedImage> GetImage(long id)
