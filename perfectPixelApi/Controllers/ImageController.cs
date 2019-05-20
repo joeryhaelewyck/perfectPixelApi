@@ -1,11 +1,7 @@
-﻿
-using System.Linq;
-using perfectPixelApi.Data;
-using perfectPixelApi.Model;
+﻿using perfectPixelApi.Model;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using NSwag.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,15 +19,27 @@ namespace perfectPixelApi.Controllers
             _imageRepository = context;
         
         }
+        // GET: api/Recipes
+        /// <summary>
+        /// Get all recipes ordered by name
+        /// </summary>
+        /// <returns>array of images</returns>
         [HttpGet]
         [Route("api/[controller]")]
         public IEnumerable<SubmittedImage> GetImages()
         {
             return _imageRepository.GetAll();
         }
+        // GET: api/Recipes/5
+        /// <summary>
+        /// Get the image with given id
+        /// </summary>
+        /// <param name="id">the id of the image</param>
+        /// <returns>The image</returns>
         [HttpGet("{id}")]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> GetImage(int id)
+        [SwaggerIgnore]
+        public ActionResult<SubmittedImage> GetImageById(int id)
         {
             var image =  _imageRepository.GetById(id);
             if (image == null)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 using perfectPixelApi.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,7 +28,7 @@ namespace perfectPixelApi.Controllers
         }
         [HttpGet("{id}")]
         [Route("api/[controller]/{id}")]
-        public ActionResult<Score> GetImage(int id)
+        public ActionResult<Score> GetScoreById(int id)
         {
             var Score = _scoreRepository.GetById(id);
             if (Score == null)

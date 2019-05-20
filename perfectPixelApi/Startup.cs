@@ -23,11 +23,20 @@ namespace perfectPixelApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddDbContext<ImageContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("ImageContext")));
 
             services.AddScoped<ISubmittedImageRepository, SubmittedImageRepository>();
             services.AddScoped<IScoreRepository, ScoreRepository>();
+
+            services.AddOpenApiDocument(c =>
+            {
+                c.DocumentName = "apidocs";
+                c.Title = "PerfectPixel API";
+                c.Version = "v1";
+                c.Description = "Images and score for PerfectPixel site";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +54,8 @@ namespace perfectPixelApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwaggerUi3();
+            app.UseSwagger();
         }
     }
 }
