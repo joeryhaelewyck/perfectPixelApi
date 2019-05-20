@@ -10,5 +10,6 @@ namespace perfectPixelApi.Models
         public long Id { get; set; }
         public string Month { get; set; }
         public string ImageName { get; set; }
+        public int Score { get; set; }
     }
 }

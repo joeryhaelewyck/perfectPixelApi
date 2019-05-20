@@ -45,6 +45,12 @@ namespace perfectPixelApi.Controllers
 
             return image;
         }
+        [HttpGet("{month")]
+        public async Task<ActionResult<Image>> GetFirstImageOfTheMonth(string month)
+        {
+            //not implemented
+            return null;
+        }
         [HttpPost]
         public async Task<ActionResult<Image>> PostImage(Image image)
         {
