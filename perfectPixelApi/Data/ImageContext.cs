@@ -1,11 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using perfectPixelApi.Models;
-
+using perfectPixelApi.Data.Mappers;
+using perfectPixelApi.Model;
 namespace perfectPixelApi.Data
 {
     public class ImageContext : DbContext
     {
-        public ImageContext(DbContextOptions<ImageContext> options) : base(options) { }
-        public DbSet<Image> MonthImages { get; set; }
+        public DbSet<SubmittedImage> Images { get; set; }
+        public ImageContext(DbContextOptions<ImageContext> options) : base(options)
+        {
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new ImageConfiguration());
+        }
     }
 }

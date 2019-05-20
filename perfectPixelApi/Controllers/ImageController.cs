@@ -1,7 +1,7 @@
 ﻿
 using System.Linq;
 using perfectPixelApi.Data;
-using perfectPixelApi.Models;
+using perfectPixelApi.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -11,32 +11,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace perfectPixelApi.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
     {
-        private readonly ImageContext _context;
+        private readonly ISubmittedImageRepository _imageRepository;
    
-        public ImageController(ImageContext context)
+        public ImageController(ISubmittedImageRepository context)
         {
-            _context = context;
-            // in case there is no data in the database
-            if (_context.MonthImages.Count() == 0)
-            {
-                _context.MonthImages.Add(new Image { ImageName = "ImageOfAnEmptyDatabase" });
-                _context.SaveChanges();
-            }
-
+            _imageRepository = context;
+        
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Image>>> GetImagesOfTheMonth()
+        public IEnumerable<SubmittedImage> GetImages()
         {
-            return await _context.MonthImages.ToListAsync();
+            return _imageRepository.GetAll();
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Image>> GetFirstImageOfTheMonth(long id)
+        public ActionResult<SubmittedImage> GetImage(long id)
         {
-            var image = await _context.MonthImages.FindAsync(id);
+            var image =  _imageRepository.GetById(id);
 
             if (image == null)
             {
@@ -45,19 +41,14 @@ namespace perfectPixelApi.Controllers
 
             return image;
         }
-        [HttpGet("{month")]
-        public async Task<ActionResult<Image>> GetFirstImageOfTheMonth(string month)
-        {
-            //not implemented
-            return null;
-        }
-        [HttpPost]
-        public async Task<ActionResult<Image>> PostImage(Image image)
-        {
-            _context.MonthImages.Add(image);
-            await _context.SaveChangesAsync();
+        
+        //[HttpPost]
+        //public async Task<ActionResult<SubmittedImage>> PostImage(SubmittedImage image)
+        //{
+        //    _imageRepository.MonthImages.Add(image);
+        //    await _imageRepository.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetFirstImageOfTheMonth), new { id = image.Id }, image);
-        }
+        //    return CreatedAtAction(nameof(GetFirstImageOfTheMonth), new { id = image.Id }, image);
+        //}
     }
 }

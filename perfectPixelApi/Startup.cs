@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using perfectPixelApi.Models;
+using perfectPixelApi.Model;
 using perfectPixelApi.Data;
 using Microsoft.EntityFrameworkCore;
+using perfectPixelApi.Data.Repositories;
 
 namespace perfectPixelApi
 {
@@ -21,9 +22,11 @@ namespace perfectPixelApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ImageContext>(opt =>
-                opt.UseInMemoryDatabase("ImagesOfTheMonth"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<ImageContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("ImageContext")));
+
+            services.AddScoped<ISubmittedImageRepository, SubmittedImageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,32 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using perfectPixelApi.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace perfectPixelApi.Data.Mappers
+{
+    public class ImageConfiguration : IEntityTypeConfiguration<SubmittedImage>
+    {
+        public void Configure(EntityTypeBuilder<SubmittedImage> builder)
+        {
+            //Table name
+            builder.ToTable("SubmittedImage");
+            //Primary Key
+            builder.HasKey(I => I.Id);
+            //Properties
+            builder.Property(I => I.Name)
+                .HasColumnName("NAME")
+                .IsRequired();
+            builder.Property(I => I.Month)
+                .HasColumnName("MONTH")
+                .IsRequired();
+            builder.Property(I => I.Score)
+                .HasColumnName("SCORE");
+            builder.Property(I => I.Image)
+                .HasColumnName("IMAGE");
+        }
+    }
+}
