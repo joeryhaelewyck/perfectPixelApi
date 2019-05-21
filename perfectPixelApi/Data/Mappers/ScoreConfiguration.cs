@@ -20,7 +20,7 @@ namespace perfectPixelApi.Data.Mappers
             builder.Property(I => I.Idsubmittedimage)
                 .HasColumnName("IDSUBMITTEDIMAGE")
                 .IsRequired();
-            builder.Property(I => I.ImageScore)
+            builder.Property(I => I.Imagescore)
                 .HasColumnName("IMAGESCORE")
                 .IsRequired();
             builder.Property(I => I.Voter)

@@ -19,12 +19,15 @@ namespace perfectPixelApi.Model
         public byte? Averagescore { get; set; }
         [Column("IMAGE", TypeName = "image")]
         public byte[] Image { get; set; }
+        [Column("VOTER")]
+        public string Voter { get; set; }
 
-        public SubmittedImage(string name, byte month, byte[] image)
+        public SubmittedImage(string name, byte month, byte[] image, string voter)
         {
             Name = name;
             Month = month;
             Image = image;
+            Voter = voter;
         }
     }
 }

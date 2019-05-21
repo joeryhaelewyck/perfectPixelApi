@@ -12,11 +12,10 @@ namespace perfectPixelApi.Model
         [Column("IDSUBMITTEDIMAGE")]
         public int Idsubmittedimage { get; set; }
         [Column("IMAGESCORE")]
-        public int ImageScore { get; set; }
+        public int Imagescore { get; set; }
         [Required]
         [Column("VOTER")]
         [StringLength(50)]
         public string Voter { get; set; }
-
     }
 }

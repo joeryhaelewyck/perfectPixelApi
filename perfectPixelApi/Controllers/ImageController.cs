@@ -63,9 +63,9 @@ namespace perfectPixelApi.Controllers
         }
         // GET: api/image/name/jokkebrok
         /// <summary>
-        /// Get the image with given id
+        /// Get the image with given name
         /// </summary>
-        /// <param name="id">the name of the image</param>
+        /// <param name="name">the name of the image</param>
         /// <returns>array of images </returns>
         [HttpGet]
         [Route("api/[controller]/name/{name}")]
@@ -78,13 +78,32 @@ namespace perfectPixelApi.Controllers
         /// <summary>
         /// Get the image with given id
         /// </summary>
-        /// <param name="id">the number of the month</param>
+        /// <param name="month">the number of the month</param>
         /// <returns>The image with the highest score for the given month</returns>
         [HttpGet]
         [Route("api/[controller]/highscore/{month}")]
         public ActionResult<SubmittedImage> GetImageWithHighestScoreForCertainMonth(byte month)
         {
             return _imageRepository.GetImageByHighScoreByMonth(month);
+
+        }
+        // GET: api/image/voter/joeryhaelewyck@hotmail.com/month/5
+        /// <summary>
+        /// Get the submitted image for a given voter and given month
+        /// </summary>
+        /// <param name="voter">mail of the voter</param>
+        /// <param name="month">the number of the month</param>
+        /// <returns>The image with the highest score for the given month</returns>
+        [HttpGet]
+        [Route("api/[controller]/voter/{voter}/month/{month}")]
+        public ActionResult<SubmittedImage> GetImagesByVoterbyMonth(string voter, byte month)
+        {
+            var image = _imageRepository.GetImageByVoterByMonth(voter,month);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            return image;
 
         }
         /// <summary>
@@ -94,7 +113,7 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/")]
         public ActionResult<SubmittedImage> PostImage(SubmittedImageDTO submittedImageDTO)
         {
-            var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image);
+            var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image, submittedImageDTO.Voter);
             imageToCreate.Id = _imageRepository.GetNewID();
             _imageRepository.Add(imageToCreate);
             _imageRepository.SaveChanges();

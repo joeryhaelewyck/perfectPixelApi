@@ -18,7 +18,11 @@ namespace perfectPixelApi.Data.Repositories
 
         public void Add(SubmittedImage image)
         {
-            _images.Add(image);
+            if (SubmittedImageIsUniqueForGivenMonthForGivenVoter(image))
+            {
+                _images.Add(image);
+            }
+           
         }
 
         public void Delete(SubmittedImage image)
@@ -66,6 +70,25 @@ namespace perfectPixelApi.Data.Repositories
         {
             int id = _images.OrderByDescending(i => i.Id).Select(i => i.Id).First();
             return id + 1;
+        }
+        private bool SubmittedImageIsUniqueForGivenMonthForGivenVoter(SubmittedImage image)
+        {
+            var imageToCheck = GetImageByVoterByMonth(image.Voter, image.Month);
+            if (imageToCheck == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public SubmittedImage GetImageByVoterByMonth(string mail, byte month)
+        {
+            return _images.Where(i => i.Month == month).FirstOrDefault(i => i.Voter == mail);
+        }
+
+        public IEnumerable<SubmittedImage> GetImageByVoter(string mail)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

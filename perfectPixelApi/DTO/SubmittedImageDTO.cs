@@ -9,7 +9,8 @@ namespace perfectPixelApi.DTO
         public string Name { get; set; }
         [Required]
         public byte Month { get; set; }
-        [Required]
         public byte[] Image { get; set; }
+        [Required]
+        public string Voter { get; set; }
     }
 }
