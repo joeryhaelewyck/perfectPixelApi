@@ -135,5 +135,17 @@ namespace perfectPixelApi.Controllers
             _imageRepository.SaveChanges();
             return image;
         }
+        [HttpPut]
+        [Route("api/[controller]/{id}")]
+        public ActionResult<SubmittedImage> ChangeImage(int id, SubmittedImage image)
+        {
+            if (id != image.Id)
+            {
+                return BadRequest();
+            }
+            _imageRepository.Update(image);
+            _imageRepository.SaveChanges();
+            return image;
+        }
     }
 }

@@ -64,7 +64,7 @@ namespace perfectPixelApi.Data.Repositories
 
         public void Update(SubmittedImage image)
         {
-            throw new System.NotImplementedException();
+            _images.Update(image);
         }
         public int GetNewID()
         {
