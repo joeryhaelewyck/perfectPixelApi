@@ -15,9 +15,9 @@ namespace perfectPixelApi.Data
             modelBuilder.ApplyConfiguration(new ScoreConfiguration());
 
             modelBuilder.Entity<SubmittedImage>().HasData(
-                new SubmittedImage { Id = 1, Month = 5, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Voter = "lindsay@hotmail.com" },
-                new SubmittedImage { Id = 2, Month = 5, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 }, Voter = "noukie@hotmail.com" },
-                new SubmittedImage { Id = 3, Month = 5, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20,0x20 }, Voter = "slam@hotmail.com" }
+                new SubmittedImage { Id = 1, Month = 5, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Creator = "lindsay@hotmail.com" },
+                new SubmittedImage { Id = 2, Month = 5, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 }, Creator = "noukie@hotmail.com" },
+                new SubmittedImage { Id = 3, Month = 5, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20,0x20 }, Creator = "slam@hotmail.com" }
                 );
 
             modelBuilder.Entity<Score>().HasData(

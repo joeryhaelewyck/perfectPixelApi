@@ -75,7 +75,7 @@ namespace perfectPixelApi.Data.Repositories
         
         public SubmittedImage GetImageByVoterByMonth(string mail, byte month)
         {
-            return _images.Where(i => i.Month == month).FirstOrDefault(i => i.Voter == mail);
+            return _images.Where(i => i.Month == month).FirstOrDefault(i => i.Creator == mail);
         }
 
         public IEnumerable<SubmittedImage> GetImageByVoter(string mail)
@@ -84,7 +84,7 @@ namespace perfectPixelApi.Data.Repositories
         }
         private bool SubmittedImageIsUniqueForGivenMonthForGivenVoter(SubmittedImage image)
         {
-            var imageToCheck = GetImageByVoterByMonth(image.Voter, image.Month);
+            var imageToCheck = GetImageByVoterByMonth(image.Creator, image.Month);
             if (imageToCheck == null)
             {
                 return true;

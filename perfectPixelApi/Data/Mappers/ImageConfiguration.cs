@@ -27,7 +27,7 @@ namespace perfectPixelApi.Data.Mappers
                 .HasColumnName("AVERAGESCORE");
             builder.Property(I => I.Image)
                 .HasColumnName("IMAGE");
-            builder.Property(I => I.Voter)
+            builder.Property(I => I.Creator)
                .HasColumnName("VOTER");
         }
     }

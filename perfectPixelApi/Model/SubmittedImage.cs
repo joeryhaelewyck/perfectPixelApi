@@ -20,7 +20,7 @@ namespace perfectPixelApi.Model
         [Column("IMAGE", TypeName = "image")]
         public byte[] Image { get; set; }
         [Column("VOTER")]
-        public string Voter { get; set; }
+        public string Creator { get; set; }
 
         public SubmittedImage() { }
         public SubmittedImage(string name, byte month, byte[] image, string voter)
@@ -28,7 +28,7 @@ namespace perfectPixelApi.Model
             Name = name;
             Month = month;
             Image = image;
-            Voter = voter;
+            Creator = voter;
         }
     }
 }
