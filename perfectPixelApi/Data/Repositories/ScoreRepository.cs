@@ -46,6 +46,12 @@ namespace perfectPixelApi.Data.Repositories
             return _scores.Where(s => s.IdSubmittedImage == imageId);
         }
 
+        public Score GetByImageIdAndVoter(int imageId, string voter)
+        {
+            var scoresForSpecificImage = GetByImageId(imageId);
+            return scoresForSpecificImage.FirstOrDefault(s => s.Voter == voter);
+        }
+
         public IEnumerable<Score> GetByVoter(string email)
         {
             return _scores.Where(s => s.Voter == email);

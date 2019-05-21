@@ -16,9 +16,11 @@ namespace perfectPixelApi.Controllers
     public class ScoreController : ControllerBase
     {
         private readonly IScoreRepository _scoreRepository;
-        public ScoreController(IScoreRepository context)
+        private readonly ISubmittedImageRepository _submittedImageRepository;
+        public ScoreController(IScoreRepository scoreRepository, ISubmittedImageRepository submittedImageRepository)
         {
-            _scoreRepository = context;
+            _scoreRepository = scoreRepository;
+            _submittedImageRepository = submittedImageRepository;
         }
         // GET: api/score/
         /// <summary>
@@ -79,19 +81,30 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/")]
         public ActionResult<Score> PostScore(ScoreDTO scoreDTO)
         {
+            if (_scoreRepository.GetByImageIdAndVoter(scoreDTO.IdSubmittedImage, scoreDTO.Voter) != null)
+            {
+                return BadRequest("You already voted");
+            }
+            if (_submittedImageRepository.GetById(scoreDTO.IdSubmittedImage).Creator == scoreDTO.Voter)
+            {
+                return BadRequest("You can't vote on yourself!!!");
+            }
             var scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
             scoreToCreate.Id = _scoreRepository.GetNewID();
             _scoreRepository.Add(scoreToCreate);
             _scoreRepository.SaveChanges();
             return CreatedAtAction(nameof(GetScoreById), new { id = scoreToCreate.Id }, scoreToCreate);
         }
+        /// <summary>
+        /// changes the value of a score
+        /// </summary>
         [HttpPatch]
         [Route("api/[controller]/{id}")]
         public ActionResult<Score> PatchScore(int id, ScorePatchDTO scorePatch)
         {
             if (scorePatch == null)
             {
-                return BadRequest();
+                return BadRequest("please insert information");
             }
             if (_scoreRepository.GetById(id) == null)
             {

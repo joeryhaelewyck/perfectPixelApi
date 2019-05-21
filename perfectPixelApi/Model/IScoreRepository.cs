@@ -8,6 +8,7 @@ namespace perfectPixelApi.Model
     {
         Score GetById(int id);
         Score ApplyPatch(Score currentScore, ScorePatchDTO scorePatch);
+        Score GetByImageIdAndVoter(int imageId, string voter);
         IEnumerable<Score> GetByVoter(string name);
         IEnumerable<Score> GetAll();
         IEnumerable<Score> GetByImageId(int id);

@@ -144,7 +144,7 @@ namespace perfectPixelApi.Controllers
         {
             if(imageDTO == null)
             {
-                return BadRequest();
+                return BadRequest("please insert information");
             }
             if(_imageRepository.GetById(id) == null)
             {
@@ -164,7 +164,7 @@ namespace perfectPixelApi.Controllers
         public ActionResult<SubmittedImage> ChangeImageSpecificProperties(int id, ImagePatchDTO imagePatch) {
             if(imagePatch == null)
             {
-                return BadRequest();
+                return BadRequest("please insert information");
             }
             if (_imageRepository.GetById(id) == null)
             {
