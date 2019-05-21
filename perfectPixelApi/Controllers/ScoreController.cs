@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using perfectPixelApi.DTO;
 using perfectPixelApi.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -70,6 +71,19 @@ namespace perfectPixelApi.Controllers
         public IEnumerable<Score> GetScoresForGivenVoter(string email)
         {
             return _scoreRepository.GetByVoter(email);
+        }
+        /// <summary>
+        /// Adds an score to the database
+        /// </summary>
+        [HttpPost]
+        [Route("api/[controller]/")]
+        public ActionResult<SubmittedImage> PostImage(ScoreDTO scoreDTO)
+        {
+            var scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
+            scoreToCreate.Id = _scoreRepository.GetNewID();
+            _scoreRepository.Add(scoreToCreate);
+            _scoreRepository.SaveChanges();
+            return CreatedAtAction(nameof(GetScoreById), new { id = scoreToCreate.Id }, scoreToCreate);
         }
 
     }

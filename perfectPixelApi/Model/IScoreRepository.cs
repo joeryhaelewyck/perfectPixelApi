@@ -12,6 +12,7 @@ namespace perfectPixelApi.Model
         void Delete(Score score);
         void Update(Score score);
         void SaveChanges();
+        int GetNewID();
     }
 }
 

@@ -5,17 +5,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace perfectPixelApi.Model
 {
-    public partial class Score
+    public class Score
     {
         [Column("ID")]
         public int Id { get; set; }
         [Column("IDSUBMITTEDIMAGE")]
-        public int Idsubmittedimage { get; set; }
+        public int IdSubmittedImage { get; set; }
         [Column("IMAGESCORE")]
-        public int Imagescore { get; set; }
+        public int ImageScore { get; set; }
         [Required]
         [Column("VOTER")]
         [StringLength(50)]
         public string Voter { get; set; }
+        public Score(int idSubmittedImage, int imageScore, string voter)
+        {
+            IdSubmittedImage = idSubmittedImage;
+            ImageScore = imageScore;
+            Voter = voter;
+        }
     }
 }

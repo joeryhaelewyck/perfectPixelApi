@@ -19,7 +19,7 @@ namespace perfectPixelApi.Data.Repositories
         }
         public void Add(Score score)
         {
-            throw new NotImplementedException();
+            _scores.Add(score);
         }
 
         public void Delete(Score score)
@@ -40,7 +40,7 @@ namespace perfectPixelApi.Data.Repositories
 
         public IEnumerable<Score> GetByImageId(int imageId)
         {
-            return _scores.Where(s => s.Idsubmittedimage == imageId);
+            return _scores.Where(s => s.IdSubmittedImage == imageId);
         }
 
         public IEnumerable<Score> GetByVoter(string email)
@@ -48,9 +48,15 @@ namespace perfectPixelApi.Data.Repositories
             return _scores.Where(s => s.Voter == email);
         }
 
+        public int GetNewID()
+        {
+            int id = _scores.OrderByDescending(s => s.Id).Select(s => s.Id).First();
+            return id + 1;
+        }
+
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _dbContext.SaveChanges();
         }
 
         public void Update(Score score)
