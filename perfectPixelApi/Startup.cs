@@ -27,6 +27,7 @@ namespace perfectPixelApi
             services.AddDbContext<ImageContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("ImageContext")));
 
+            services.AddScoped<ImageDataInitializer>();
             services.AddScoped<ISubmittedImageRepository, SubmittedImageRepository>();
             services.AddScoped<IScoreRepository, ScoreRepository>();
 
@@ -41,7 +42,7 @@ namespace perfectPixelApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ImageDataInitializer imageDataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -58,6 +59,7 @@ namespace perfectPixelApi
             app.UseSwaggerUi3();
             app.UseSwagger();
             app.UseCors("AllowAllOrigins");
+            imageDataInitializer.InitializeData();
         }
     }
 }

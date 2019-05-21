@@ -17,6 +17,7 @@ namespace perfectPixelApi.Model
         [Column("VOTER")]
         [StringLength(50)]
         public string Voter { get; set; }
+        public Score() { }
         public Score(int idSubmittedImage, int imageScore, string voter)
         {
             IdSubmittedImage = idSubmittedImage;

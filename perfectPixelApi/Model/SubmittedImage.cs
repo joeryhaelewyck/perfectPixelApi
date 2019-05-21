@@ -22,6 +22,7 @@ namespace perfectPixelApi.Model
         [Column("VOTER")]
         public string Voter { get; set; }
 
+        public SubmittedImage() { }
         public SubmittedImage(string name, byte month, byte[] image, string voter)
         {
             Name = name;
