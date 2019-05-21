@@ -15,9 +15,12 @@ namespace perfectPixelApi.Data
             modelBuilder.ApplyConfiguration(new ScoreConfiguration());
 
             modelBuilder.Entity<SubmittedImage>().HasData(
-                new SubmittedImage { Id = 1, Month = 5, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Creator = "lindsay@hotmail.com" },
-                new SubmittedImage { Id = 2, Month = 5, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 }, Creator = "noukie@hotmail.com" },
-                new SubmittedImage { Id = 3, Month = 5, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20,0x20 }, Creator = "slam@hotmail.com" }
+                new SubmittedImage { Id = 1, Month = 4, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Averagescore = 5 ,Creator = "lindsay@hotmail.com" },
+                new SubmittedImage { Id = 2, Month = 4, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 },Averagescore = 3 , Creator = "noukie@hotmail.com" },
+                new SubmittedImage { Id = 3, Month = 4, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20,0x20 }, Averagescore = 3 ,Creator = "slam@hotmail.com" },
+                new SubmittedImage { Id = 4, Month = 5, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Creator = "joery@hotmail.com" },
+                new SubmittedImage { Id = 5, Month = 5, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 }, Creator = "davy@hotmail.com" },
+                new SubmittedImage { Id = 6, Month = 5, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20 }, Creator = "tai@hotmail.com" }
                 );
 
             modelBuilder.Entity<Score>().HasData(
