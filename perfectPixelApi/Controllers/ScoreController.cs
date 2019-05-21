@@ -19,13 +19,23 @@ namespace perfectPixelApi.Controllers
         {
             _scoreRepository = context;
         }
-
+        // GET: api/score/
+        /// <summary>
+        /// Get all the submitted scores
+        /// </summary>
+        /// <returns>array of images </returns>
         [HttpGet]
         [Route("api/[controller]")]
         public IEnumerable<Score> GetScores()
         {
             return _scoreRepository.GetAll();
         }
+        // GET: api/score/1
+        /// <summary>
+        /// Get the score with given id
+        /// </summary>
+        /// <param name="id">the id of the score</param>
+        /// <returns>array of images </returns>
         [HttpGet("{id}")]
         [Route("api/[controller]/{id}")]
         public ActionResult<Score> GetScoreById(int id)

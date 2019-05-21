@@ -19,7 +19,7 @@ namespace perfectPixelApi.Controllers
             _imageRepository = context;
         
         }
-        // GET: api/Recipes
+        // GET: api/image
         /// <summary>
         /// Get all recipes ordered by name
         /// </summary>
@@ -30,7 +30,7 @@ namespace perfectPixelApi.Controllers
         {
             return _imageRepository.GetAll();
         }
-        // GET: api/Recipes/5
+        // GET: api/image/5
         /// <summary>
         /// Get the image with given id
         /// </summary>
@@ -48,6 +48,12 @@ namespace perfectPixelApi.Controllers
             }
             return image;
         }
+        // GET: api/image/month/5
+        /// <summary>
+        /// Get the image with given id
+        /// </summary>
+        /// <param name="id">the number of the month</param>
+        /// <returns>The image</returns>
         [HttpGet]
         [Route("api/[controller]/month/{month}")]
         public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
@@ -55,6 +61,12 @@ namespace perfectPixelApi.Controllers
             return _imageRepository.GetImagesByMonth(month);
             
         }
+        // GET: api/image/name/jokkebrok
+        /// <summary>
+        /// Get the image with given id
+        /// </summary>
+        /// <param name="id">the name of the image</param>
+        /// <returns>array of images </returns>
         [HttpGet]
         [Route("api/[controller]/name/{name}")]
         public IEnumerable<SubmittedImage> GetImagesByName(string name)
@@ -62,6 +74,12 @@ namespace perfectPixelApi.Controllers
             return _imageRepository.GetByName(name);
 
         }
+        // GET: api/image/highscore/5
+        /// <summary>
+        /// Get the image with given id
+        /// </summary>
+        /// <param name="id">the number of the month</param>
+        /// <returns>The image with the highest score for the given month</returns>
         [HttpGet]
         [Route("api/[controller]/highscore/{month}")]
         public ActionResult<SubmittedImage> GetImageWithHighestScoreForCertainMonth(int month)
