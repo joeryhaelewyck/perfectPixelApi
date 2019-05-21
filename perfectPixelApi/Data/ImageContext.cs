@@ -24,18 +24,28 @@ namespace perfectPixelApi.Data
                 );
 
             modelBuilder.Entity<Score>().HasData(
-                new Score { Id = 1, IdSubmittedImage = 1, ImageScore = 5, Voter = "joery@hotmail.com" },
-                new Score { Id = 2, IdSubmittedImage = 2, ImageScore = 6, Voter = "joery@hotmail.com" },
-                new Score { Id = 3, IdSubmittedImage = 3, ImageScore = 7, Voter = "joery@hotmail.com" },
-                new Score { Id = 4, IdSubmittedImage = 1, ImageScore = 8, Voter = "davy@hotmail.com" },
-                new Score { Id = 5, IdSubmittedImage = 2, ImageScore = 2, Voter = "davy@hotmail.com" },
-                new Score { Id = 6, IdSubmittedImage = 3, ImageScore = 9, Voter = "davy@hotmail.com" },
-                new Score { Id = 7, IdSubmittedImage = 1, ImageScore = 1, Voter = "tai@hotmail.com" },
-                new Score { Id = 8, IdSubmittedImage = 2, ImageScore = 1, Voter = "tai@hotmail.com" },
-                new Score { Id = 9, IdSubmittedImage = 3, ImageScore = 2, Voter = "tai@hotmail.com" }
+                createScore(1, 1, 5, "joery@hotmail.com"),
+                createScore(2, 2, 6, "joery@hotmail.com"),
+                createScore(3, 3, 7, "joery@hotmail.com"),
+                createScore(4, 1, 8, "joery@hotmail.com"),
+                createScore(5, 2, 2, "joery@hotmail.com"),
+                createScore(6, 3, 9, "joery@hotmail.com"),
+                createScore(7, 1, 1, "joery@hotmail.com"),
+                createScore(8, 2, 1, "joery@hotmail.com"),
+                createScore(9, 3, 2, "joery@hotmail.com")
                 );
         }
         public DbSet<SubmittedImage> Images { get; set; }
         public DbSet<Score> Scores { get; set; }
+
+        private Score createScore(int id, int submittedImageId, int imageScore, string voter)
+        {
+            return Score.GetBuilder()
+                .withId(id)
+                .withSubmittedImageId(submittedImageId)
+                .withImageScore(imageScore)
+                .withVoter(voter)
+                .Build();
+        }
     }
 }

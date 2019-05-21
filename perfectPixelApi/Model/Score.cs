@@ -8,21 +8,56 @@ namespace perfectPixelApi.Model
     public class Score
     {
         [Column("ID")]
-        public int Id { get; set; }
+        public int Id { get; private set; }
         [Column("IDSUBMITTEDIMAGE")]
-        public int IdSubmittedImage { get; set; }
+        public int IdSubmittedImage { get; private set; }
         [Column("IMAGESCORE")]
-        public int ImageScore { get; set; }
+        public int ImageScore { get; private set; }
         [Required]
         [Column("VOTER")]
         [StringLength(50)]
-        public string Voter { get; set; }
+        public string Voter { get; private set; }
+       
         public Score() { }
-        public Score(int idSubmittedImage, int imageScore, string voter)
+        
+        public static Builder GetBuilder()
         {
-            IdSubmittedImage = idSubmittedImage;
-            ImageScore = imageScore;
-            Voter = voter;
+            return new Builder();
         }
+        
+        public class Builder
+        {
+            private readonly  Score _score = new Score();
+
+            public Builder withId(int id)
+            {
+                _score.Id = id;
+                return this;
+            }
+
+            public Builder withSubmittedImageId(int submittedImageId)
+            {
+                _score.IdSubmittedImage = submittedImageId;
+                return this;
+            }
+
+            public Builder withImageScore(int imageScore)
+            {
+                _score.ImageScore = imageScore;
+                return this;
+            }
+
+            public Builder withVoter(string voter)
+            {
+                _score.Voter = voter;
+                return this;
+            }
+
+            public Score Build()
+            {
+                return _score;
+            }
+        }
+        
     }
 }

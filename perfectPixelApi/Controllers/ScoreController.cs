@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using perfectPixelApi.DTO;
 using perfectPixelApi.Model;
+using perfectPixelApi.services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,13 +16,13 @@ namespace perfectPixelApi.Controllers
     [Produces("application/json")]
     public class ScoreController : ControllerBase
     {
-        private readonly IScoreRepository _scoreRepository;
-        private readonly ISubmittedImageRepository _submittedImageRepository;
-        public ScoreController(IScoreRepository scoreRepository, ISubmittedImageRepository submittedImageRepository)
+        private readonly IScoreService _scoreService;
+
+            public ScoreController(IScoreService scoreService)
         {
-            _scoreRepository = scoreRepository;
-            _submittedImageRepository = submittedImageRepository;
+            _scoreService = scoreService;
         }
+        
         // GET: api/score/
         /// <summary>
         /// Get all the submitted scores
@@ -29,9 +30,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>array of scores </returns>
         [HttpGet]
         [Route("api/[controller]")]
-        public IEnumerable<Score> GetScores()
+        public IEnumerable<ScoreDTO> GetScores()
         {
-            return _scoreRepository.GetAll();
+            return _scoreService.GetAll();
         }
         // GET: api/score/1
         /// <summary>
@@ -89,7 +90,7 @@ namespace perfectPixelApi.Controllers
             {
                 return BadRequest("You can't vote on yourself!!!");
             }
-            var scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
+            Score scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
             //scoreToCreate.Id = _scoreRepository.GetNewID();
             _scoreRepository.Add(scoreToCreate);
             _scoreRepository.SaveChanges();
