@@ -37,6 +37,7 @@ namespace perfectPixelApi
                 c.Version = "v1";
                 c.Description = "Images and score for PerfectPixel site";
             });
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +57,7 @@ namespace perfectPixelApi
             app.UseMvc();
             app.UseSwaggerUi3();
             app.UseSwagger();
+            app.UseCors("AllowAllOrigins");
         }
     }
 }

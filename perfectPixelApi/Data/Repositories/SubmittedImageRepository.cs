@@ -71,6 +71,16 @@ namespace perfectPixelApi.Data.Repositories
             int id = _images.OrderByDescending(i => i.Id).Select(i => i.Id).First();
             return id + 1;
         }
+        
+        public SubmittedImage GetImageByVoterByMonth(string mail, byte month)
+        {
+            return _images.Where(i => i.Month == month).FirstOrDefault(i => i.Voter == mail);
+        }
+
+        public IEnumerable<SubmittedImage> GetImageByVoter(string mail)
+        {
+            throw new System.NotImplementedException();
+        }
         private bool SubmittedImageIsUniqueForGivenMonthForGivenVoter(SubmittedImage image)
         {
             var imageToCheck = GetImageByVoterByMonth(image.Voter, image.Month);
@@ -81,14 +91,5 @@ namespace perfectPixelApi.Data.Repositories
             return false;
         }
 
-        public SubmittedImage GetImageByVoterByMonth(string mail, byte month)
-        {
-            return _images.Where(i => i.Month == month).FirstOrDefault(i => i.Voter == mail);
-        }
-
-        public IEnumerable<SubmittedImage> GetImageByVoter(string mail)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
