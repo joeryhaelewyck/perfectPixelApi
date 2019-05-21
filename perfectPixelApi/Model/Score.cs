@@ -17,5 +17,6 @@ namespace perfectPixelApi.Model
         [Column("VOTER")]
         [StringLength(50)]
         public string Voter { get; set; }
+
     }
 }

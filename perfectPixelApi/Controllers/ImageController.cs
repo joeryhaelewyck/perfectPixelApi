@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using NSwag.Annotations;
+using perfectPixelApi.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,11 +14,11 @@ namespace perfectPixelApi.Controllers
     public class ImageController : ControllerBase
     {
         private readonly ISubmittedImageRepository _imageRepository;
-  
+
         public ImageController(ISubmittedImageRepository context)
         {
             _imageRepository = context;
-        
+
         }
         // GET: api/image
         /// <summary>
@@ -40,7 +41,7 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<SubmittedImage> GetImageById(int id)
         {
-            var image =  _imageRepository.GetById(id);
+            var image = _imageRepository.GetById(id);
             if (image == null)
             {
                 return NotFound();
@@ -55,10 +56,10 @@ namespace perfectPixelApi.Controllers
         /// <returns>The image</returns>
         [HttpGet]
         [Route("api/[controller]/month/{month}")]
-        public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
+        public IEnumerable<SubmittedImage> GetImagesByMonth(byte month)
         {
             return _imageRepository.GetImagesByMonth(month);
-            
+
         }
         // GET: api/image/name/jokkebrok
         /// <summary>
@@ -81,18 +82,23 @@ namespace perfectPixelApi.Controllers
         /// <returns>The image with the highest score for the given month</returns>
         [HttpGet]
         [Route("api/[controller]/highscore/{month}")]
-        public ActionResult<SubmittedImage> GetImageWithHighestScoreForCertainMonth(int month)
+        public ActionResult<SubmittedImage> GetImageWithHighestScoreForCertainMonth(byte month)
         {
             return _imageRepository.GetImageByHighScoreByMonth(month);
 
         }
-        //[HttpPost]
-        //public async Task<ActionResult<SubmittedImage>> PostImage(SubmittedImage image)
-        //{
-        //    _imageRepository.MonthImages.Add(image);
-        //    await _imageRepository.SaveChangesAsync();
-
-        //    return CreatedAtAction(nameof(GetFirstImageOfTheMonth), new { id = image.Id }, image);
-        //}
+        /// <summary>
+        /// Adds an image to the database
+        /// </summary>
+        [HttpPost]
+        [Route("api/[controller]/")]
+        public ActionResult<SubmittedImage> PostImage(SubmittedImageDTO submittedImageDTO)
+        {
+            var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image);
+            imageToCreate.Id = _imageRepository.GetNewID();
+            _imageRepository.Add(imageToCreate);
+            _imageRepository.SaveChanges();
+            return CreatedAtAction(nameof(GetImageById), new { id = imageToCreate.Id }, imageToCreate);
+        }
     }
 }

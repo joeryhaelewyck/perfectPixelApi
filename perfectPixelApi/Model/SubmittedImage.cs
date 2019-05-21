@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace perfectPixelApi.Model
 {
-    public partial class SubmittedImage
+    public class SubmittedImage
     {
         [Column("ID")]
         public int Id { get; set; }
@@ -19,5 +19,12 @@ namespace perfectPixelApi.Model
         public byte? Averagescore { get; set; }
         [Column("IMAGE", TypeName = "image")]
         public byte[] Image { get; set; }
+
+        public SubmittedImage(string name, byte month, byte[] image)
+        {
+            Name = name;
+            Month = month;
+            Image = image;
+        }
     }
 }

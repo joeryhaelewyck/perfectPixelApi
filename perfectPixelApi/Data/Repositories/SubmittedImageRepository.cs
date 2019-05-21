@@ -18,7 +18,7 @@ namespace perfectPixelApi.Data.Repositories
 
         public void Add(SubmittedImage image)
         {
-            throw new System.NotImplementedException();
+            _images.Add(image);
         }
 
         public void Delete(SubmittedImage image)
@@ -42,25 +42,30 @@ namespace perfectPixelApi.Data.Repositories
             return _images.Where(i => i.Name == name);
         }
 
-        public SubmittedImage GetImageByHighScoreByMonth(int month)
+        public SubmittedImage GetImageByHighScoreByMonth(byte month)
         {
             var images = this.GetImagesByMonth(month);
             return images.OrderByDescending(i => i.Averagescore).First();
         }
 
-        public IEnumerable<SubmittedImage> GetImagesByMonth(int month)
+        public IEnumerable<SubmittedImage> GetImagesByMonth(byte month)
         {
             return _images.Where(i => i.Month == month).AsQueryable();
         }
 
         public void SaveChanges()
         {
-            throw new System.NotImplementedException();
+            _dbContext.SaveChanges();
         }
 
         public void Update(SubmittedImage image)
         {
             throw new System.NotImplementedException();
+        }
+        public int GetNewID()
+        {
+            int id = _images.OrderByDescending(i => i.Id).Select(i => i.Id).First();
+            return id + 1;
         }
     }
 }
