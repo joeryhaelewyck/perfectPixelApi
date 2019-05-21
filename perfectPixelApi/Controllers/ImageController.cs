@@ -114,7 +114,7 @@ namespace perfectPixelApi.Controllers
         public ActionResult<SubmittedImage> PostImage(SubmittedImageDTO submittedImageDTO)
         {
             var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image, submittedImageDTO.Voter);
-            imageToCreate.Id = _imageRepository.GetNewID();
+            //imageToCreate.Id = _imageRepository.GetNewID();
             _imageRepository.Add(imageToCreate);
             _imageRepository.SaveChanges();
             return CreatedAtAction(nameof(GetImageById), new { id = imageToCreate.Id }, imageToCreate);

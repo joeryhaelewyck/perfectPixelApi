@@ -90,7 +90,7 @@ namespace perfectPixelApi.Controllers
                 return BadRequest("You can't vote on yourself!!!");
             }
             var scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
-            scoreToCreate.Id = _scoreRepository.GetNewID();
+            //scoreToCreate.Id = _scoreRepository.GetNewID();
             _scoreRepository.Add(scoreToCreate);
             _scoreRepository.SaveChanges();
             return CreatedAtAction(nameof(GetScoreById), new { id = scoreToCreate.Id }, scoreToCreate);
