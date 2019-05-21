@@ -135,17 +135,44 @@ namespace perfectPixelApi.Controllers
             _imageRepository.SaveChanges();
             return image;
         }
+        /// <summary>
+        /// updates an image 
+        /// </summary>
         [HttpPut]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> ChangeImage(int id, SubmittedImage image)
+        public ActionResult<SubmittedImage> ChangeImage(int id, SubmittedImageDTO imageDTO)
         {
-            if (id != image.Id)
+            if(imageDTO == null)
             {
                 return BadRequest();
             }
-            _imageRepository.Update(image);
+            if(_imageRepository.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            SubmittedImage imageToUpdate = new SubmittedImage(imageDTO.Name, imageDTO.Month,imageDTO.Image, imageDTO.Voter);
+            imageToUpdate.Id = id;
+            _imageRepository.Update(imageToUpdate);
             _imageRepository.SaveChanges();
-            return image;
+            return imageToUpdate;
         }
+        /// <summary>
+        /// updates specific properties from an image 
+        /// </summary>
+        [HttpPatch]
+        [Route("api/[controller]/{id}")]
+        public ActionResult<SubmittedImage> ChangeImageSpecificProperties(int id, ImagePatchDTO imagePatch) {
+            if(imagePatch == null)
+            {
+                return BadRequest();
+            }
+            if (_imageRepository.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            SubmittedImage currentImage = _imageRepository.GetById(id);
+            return _imageRepository.ApplyPatch(currentImage, imagePatch);
+        }
+
     }
 }

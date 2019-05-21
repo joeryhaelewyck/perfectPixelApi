@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using perfectPixelApi.DTO;
 using perfectPixelApi.Model;
 
 namespace perfectPixelApi.Data.Repositories
@@ -91,5 +92,16 @@ namespace perfectPixelApi.Data.Repositories
             return false;
         }
 
+        public SubmittedImage ApplyPatch(SubmittedImage submittedImage, ImagePatchDTO imagePatch)
+        {
+            submittedImage.Name = imagePatch.Name;
+            if (imagePatch.Image != null)
+            {
+                submittedImage.Image = imagePatch.Image;
+            }
+            _images.Update(submittedImage);
+            SaveChanges();
+            return submittedImage;
+        }
     }
 }
