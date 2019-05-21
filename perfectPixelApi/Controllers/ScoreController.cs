@@ -77,13 +77,28 @@ namespace perfectPixelApi.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/[controller]/")]
-        public ActionResult<SubmittedImage> PostImage(ScoreDTO scoreDTO)
+        public ActionResult<Score> PostScore(ScoreDTO scoreDTO)
         {
             var scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
             scoreToCreate.Id = _scoreRepository.GetNewID();
             _scoreRepository.Add(scoreToCreate);
             _scoreRepository.SaveChanges();
             return CreatedAtAction(nameof(GetScoreById), new { id = scoreToCreate.Id }, scoreToCreate);
+        }
+        [HttpPatch]
+        [Route("api/[controller]/{id}")]
+        public ActionResult<Score> PatchScore(int id, ScorePatchDTO scorePatch)
+        {
+            if (scorePatch == null)
+            {
+                return BadRequest();
+            }
+            if (_scoreRepository.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            Score currentScore = _scoreRepository.GetById(id);
+            return _scoreRepository.ApplyPatch(currentScore, scorePatch);
         }
 
     }

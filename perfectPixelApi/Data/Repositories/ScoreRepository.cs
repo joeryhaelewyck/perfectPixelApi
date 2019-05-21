@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using perfectPixelApi.DTO;
 using perfectPixelApi.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,9 +22,12 @@ namespace perfectPixelApi.Data.Repositories
             _scores.Add(score);
         }
 
-        public void Delete(Score score)
+        public Score ApplyPatch(Score currentScore, ScorePatchDTO scorePatch)
         {
-            throw new NotImplementedException();
+            currentScore.ImageScore = scorePatch.ImageScore;
+            _scores.Update(currentScore);
+            SaveChanges();
+            return currentScore;
         }
 
         public IEnumerable<Score> GetAll()
@@ -57,11 +60,6 @@ namespace perfectPixelApi.Data.Repositories
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
-        }
-
-        public void Update(Score score)
-        {
-            throw new NotImplementedException();
         }
     }
 }
