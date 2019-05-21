@@ -47,7 +47,7 @@ namespace perfectPixelApi.Controllers
             }
             return Score;
         }
-        // GET: api/score/
+        // GET: api/score/imageid/2
         /// <summary>
         /// Get the scores with for the given imageId
         /// </summary>
@@ -59,6 +59,18 @@ namespace perfectPixelApi.Controllers
         {
             return _scoreRepository.GetByImageId(imageId);
         }
-        
+        // GET: api/score/voter/joeryhaelewyck@hotmail.com
+        /// <summary>
+        /// Get the scores with for the given voter(email)
+        /// </summary>
+        /// <param name="id">email of the voter</param>
+        /// <returns>array of scores </returns>
+        [HttpGet]
+        [Route("api/[controller]/voter/{email}")]
+        public IEnumerable<Score> GetScoresForGivenVoter(string email)
+        {
+            return _scoreRepository.GetByVoter(email);
+        }
+
     }
 }

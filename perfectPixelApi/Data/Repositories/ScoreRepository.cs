@@ -43,9 +43,9 @@ namespace perfectPixelApi.Data.Repositories
             return _scores.Where(s => s.Idsubmittedimage == imageId);
         }
 
-        public IEnumerable<Score> GetByVoter(string name)
+        public IEnumerable<Score> GetByVoter(string email)
         {
-            throw new NotImplementedException();
+            return _scores.Where(s => s.Voter == email);
         }
 
         public void SaveChanges()
