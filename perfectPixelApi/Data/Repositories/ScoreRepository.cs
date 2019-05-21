@@ -30,12 +30,17 @@ namespace perfectPixelApi.Data.Repositories
         public IEnumerable<Score> GetAll()
         {
             var scores = _scores.AsQueryable();
-            return scores.OrderBy(i => i.Id).ToList();
+            return scores.ToList();
         }
 
         public Score GetById(int id)
         {
-            return _scores.SingleOrDefault(i => i.Id == id);
+            return _scores.SingleOrDefault(s => s.Id == id);
+        }
+
+        public IEnumerable<Score> GetByImageId(int imageId)
+        {
+            return _scores.Where(s => s.Idsubmittedimage == imageId);
         }
 
         public IEnumerable<Score> GetByVoter(string name)

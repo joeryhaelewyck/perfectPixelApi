@@ -23,7 +23,7 @@ namespace perfectPixelApi.Controllers
         /// <summary>
         /// Get all the submitted scores
         /// </summary>
-        /// <returns>array of images </returns>
+        /// <returns>array of scores </returns>
         [HttpGet]
         [Route("api/[controller]")]
         public IEnumerable<Score> GetScores()
@@ -35,8 +35,8 @@ namespace perfectPixelApi.Controllers
         /// Get the score with given id
         /// </summary>
         /// <param name="id">the id of the score</param>
-        /// <returns>array of images </returns>
-        [HttpGet("{id}")]
+        /// <returns>one specific score </returns>
+        [HttpGet]
         [Route("api/[controller]/{id}")]
         public ActionResult<Score> GetScoreById(int id)
         {
@@ -47,7 +47,18 @@ namespace perfectPixelApi.Controllers
             }
             return Score;
         }
-
+        // GET: api/score/
+        /// <summary>
+        /// Get the scores with for the given imageId
+        /// </summary>
+        /// <param name="id">the id of the image</param>
+        /// <returns>array of scores </returns>
+        [HttpGet]
+        [Route("api/[controller]/imageid/{imageId}")]
+        public IEnumerable<Score> GetScoreForSpecificImage(int imageId)
+        {
+            return _scoreRepository.GetByImageId(imageId);
+        }
         
     }
 }

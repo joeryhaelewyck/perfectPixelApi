@@ -7,6 +7,7 @@ namespace perfectPixelApi.Model
         Score GetById(int id);
         IEnumerable<Score> GetByVoter(string name);
         IEnumerable<Score> GetAll();
+        IEnumerable<Score> GetByImageId(int id);
         void Add(Score score);
         void Delete(Score score);
         void Update(Score score);
