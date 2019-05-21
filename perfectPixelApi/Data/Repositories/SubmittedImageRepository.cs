@@ -27,7 +27,7 @@ namespace perfectPixelApi.Data.Repositories
 
         public void Delete(SubmittedImage image)
         {
-            throw new System.NotImplementedException();
+            _images.Remove(image);
         }
 
         public IEnumerable<SubmittedImage> GetAll()

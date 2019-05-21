@@ -41,7 +41,7 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<SubmittedImage> GetImageById(int id)
         {
-            var image = _imageRepository.GetById(id);
+            SubmittedImage image = _imageRepository.GetById(id);
             if (image == null)
             {
                 return NotFound();
@@ -98,7 +98,7 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/voter/{voter}/month/{month}")]
         public ActionResult<SubmittedImage> GetImagesByVoterbyMonth(string voter, byte month)
         {
-            var image = _imageRepository.GetImageByVoterByMonth(voter,month);
+            SubmittedImage image = _imageRepository.GetImageByVoterByMonth(voter,month);
             if (image == null)
             {
                 return NotFound();
@@ -118,6 +118,22 @@ namespace perfectPixelApi.Controllers
             _imageRepository.Add(imageToCreate);
             _imageRepository.SaveChanges();
             return CreatedAtAction(nameof(GetImageById), new { id = imageToCreate.Id }, imageToCreate);
+        }
+        /// <summary>
+        /// deletes an image from the database
+        /// </summary>
+        [HttpDelete]
+        [Route("api/[controller]/{id}")]
+        public ActionResult<SubmittedImage> DeleteImage(int id)
+        {
+            SubmittedImage image = _imageRepository.GetById(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            _imageRepository.Delete(image);
+            _imageRepository.SaveChanges();
+            return image;
         }
     }
 }
