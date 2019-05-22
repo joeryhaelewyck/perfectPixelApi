@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using perfectPixelApi.DTO;
-using perfectPixelApi.Model;
+using perfectPixelApi.DTOs;
+using perfectPixelApi.Repositories;
 
 namespace perfectPixelApi.Data.Repositories
 {

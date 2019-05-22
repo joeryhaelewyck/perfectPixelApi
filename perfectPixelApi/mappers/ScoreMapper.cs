@@ -1,7 +1,7 @@
-using perfectPixelApi.DTO;
-using perfectPixelApi.Model;
+using perfectPixelApi.DTOs;
+using perfectPixelApi.Repositories;
 
-namespace perfectPixelApi.mappers
+namespace perfectPixelApi.Mappers
 {
     public class ScoreMapper
     {

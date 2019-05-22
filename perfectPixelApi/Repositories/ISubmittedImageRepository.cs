@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using perfectPixelApi.DTO;
+using perfectPixelApi.DTOs;
 
-namespace perfectPixelApi.Model
+namespace perfectPixelApi.Repositories
 {
     public interface ISubmittedImageRepository
     {

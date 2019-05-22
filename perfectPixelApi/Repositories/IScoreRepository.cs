@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using perfectPixelApi.DTO;
+using perfectPixelApi.DTOs;
 
-namespace perfectPixelApi.Model
+namespace perfectPixelApi.Repositories
 {
     public interface IScoreRepository
     {
@@ -14,7 +13,6 @@ namespace perfectPixelApi.Model
         IEnumerable<Score> GetByImageId(int id);
         void Add(Score score);
         void SaveChanges();
-        int GetNewID();
         
     }
 }

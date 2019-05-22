@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using perfectPixelApi.Model;
+using perfectPixelApi.Repositories;
 using perfectPixelApi.Data;
 using Microsoft.EntityFrameworkCore;
 using perfectPixelApi.Data.Repositories;
-using perfectPixelApi.services;
-using perfectPixelApi.services.impl;
+using perfectPixelApi.Services;
+using perfectPixelApi.Services.impl;
 
 namespace perfectPixelApi
 {

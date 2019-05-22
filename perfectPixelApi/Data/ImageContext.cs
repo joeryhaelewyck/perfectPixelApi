@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using perfectPixelApi.Data.Mappers;
-using perfectPixelApi.Model;
+using perfectPixelApi.Repositories;
 namespace perfectPixelApi.Data
 {
     public class ImageContext : DbContext

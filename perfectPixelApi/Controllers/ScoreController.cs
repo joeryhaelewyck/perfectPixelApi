@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using NSwag.Annotations;
-using perfectPixelApi.DTO;
-using perfectPixelApi.Model;
-using perfectPixelApi.services;
+using perfectPixelApi.DTOs;
+using perfectPixelApi.Repositories;
+using perfectPixelApi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,12 +40,8 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<Score> GetScoreById(int id)
         {
-            var Score = _scoreRepository.GetById(id);
-            if (Score == null)
-            {
-                return NotFound();
-            }
-            return Score;
+            Score score = _scoreService.GetById(id);
+            return score;
         }
         // GET: api/score/imageid/2
         /// <summary>
@@ -61,7 +53,7 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/imageid/{imageId}")]
         public IEnumerable<Score> GetScoreForSpecificImage(int imageId)
         {
-            return _scoreRepository.GetByImageId(imageId);
+            return _scoreService.GetByImageId(imageId);
         }
         // GET: api/score/voter/joeryhaelewyck@hotmail.com
         /// <summary>
@@ -73,7 +65,7 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/voter/{email}")]
         public IEnumerable<Score> GetScoresForGivenVoter(string email)
         {
-            return _scoreRepository.GetByVoter(email);
+            return _scoreService.GetByVoter(email);
         }
         /// <summary>
         /// Adds an score to the database
@@ -82,23 +74,26 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/")]
         public ActionResult<Score> PostScore(ScoreDTO scoreDTO)
         {
-            if (_scoreRepository.GetByImageIdAndVoter(scoreDTO.IdSubmittedImage, scoreDTO.Voter) != null)
+            if (_scoreService.GetByImageIdAndVoter(scoreDTO.IdSubmittedImage, scoreDTO.Voter) != null)
             {
                 return BadRequest("You already voted");
             }
-            if (_submittedImageRepository.GetById(scoreDTO.IdSubmittedImage).Creator == scoreDTO.Voter)
-            {
-                return BadRequest("You can't vote on yourself!!!");
-            }
-            Score scoreToCreate = new Score(scoreDTO.IdSubmittedImage, scoreDTO.ImageScore, scoreDTO.Voter);
-            //scoreToCreate.Id = _scoreRepository.GetNewID();
-            _scoreRepository.Add(scoreToCreate);
-            _scoreRepository.SaveChanges();
+            //if (_scoreService.GetById(scoreDTO.IdSubmittedImage).Creator == scoreDTO.Voter)
+            //{
+            //    return BadRequest("You can't vote on yourself!!!");
+            //}
+            Score scoreToCreate = new Score.Builder()
+                .withImageScore(scoreDTO.ImageScore)
+                .withSubmittedImageId(scoreDTO.IdSubmittedImage)
+                .withVoter(scoreDTO.Voter)
+                .Build();
+            _scoreService.Add(scoreToCreate);
+            _scoreService.SaveChanges();
             return CreatedAtAction(nameof(GetScoreById), new { id = scoreToCreate.Id }, scoreToCreate);
         }
-        /// <summary>
-        /// changes the value of a score
-        /// </summary>
+        ///// <summary>
+        ///// changes the value of a score
+        ///// </summary>
         [HttpPatch]
         [Route("api/[controller]/{id}")]
         public ActionResult<Score> PatchScore(int id, ScorePatchDTO scorePatch)
@@ -107,12 +102,12 @@ namespace perfectPixelApi.Controllers
             {
                 return BadRequest("please insert information");
             }
-            if (_scoreRepository.GetById(id) == null)
+            if (_scoreService.GetById(id) == null)
             {
                 return NotFound();
             }
-            Score currentScore = _scoreRepository.GetById(id);
-            return _scoreRepository.ApplyPatch(currentScore, scorePatch);
+            Score currentScore = _scoreService.GetById(id);
+            return _scoreService.ApplyPatch(currentScore, scorePatch);
         }
 
     }

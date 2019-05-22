@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace perfectPixelApi.DTO
+namespace perfectPixelApi.DTOs
 {
     public class SubmittedImageDTO
     {

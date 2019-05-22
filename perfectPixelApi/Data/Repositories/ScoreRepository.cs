@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using perfectPixelApi.DTO;
-using perfectPixelApi.Model;
+using perfectPixelApi.DTOs;
+using perfectPixelApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,10 +24,14 @@ namespace perfectPixelApi.Data.Repositories
 
         public Score ApplyPatch(Score currentScore, ScorePatchDTO scorePatch)
         {
-            currentScore.ImageScore = scorePatch.ImageScore;
-            _scores.Update(currentScore);
+            Score updateScore = new Score.Builder()
+                .withImageScore(scorePatch.ImageScore)
+                .withSubmittedImageId(currentScore.IdSubmittedImage)
+                .withVoter(currentScore.Voter)
+                .Build();
+            _scores.Update(updateScore);
             SaveChanges();
-            return currentScore;
+            return updateScore;
         }
 
         public IEnumerable<Score> GetAll()
@@ -55,12 +59,6 @@ namespace perfectPixelApi.Data.Repositories
         public IEnumerable<Score> GetByVoter(string email)
         {
             return _scores.Where(s => s.Voter == email);
-        }
-
-        public int GetNewID()
-        {
-            int id = _scores.OrderByDescending(s => s.Id).Select(s => s.Id).First();
-            return id + 1;
         }
 
         public void SaveChanges()
