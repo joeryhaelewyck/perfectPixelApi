@@ -15,12 +15,12 @@ namespace perfectPixelApi.Data
             modelBuilder.ApplyConfiguration(new ScoreConfiguration());
 
             modelBuilder.Entity<SubmittedImage>().HasData(
-                new SubmittedImage { Id = 1, Month = 4, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Averagescore = 5 ,Creator = "lindsay@hotmail.com" },
-                new SubmittedImage { Id = 2, Month = 4, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 },Averagescore = 3 , Creator = "noukie@hotmail.com" },
-                new SubmittedImage { Id = 3, Month = 4, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20,0x20 }, Averagescore = 3 ,Creator = "slam@hotmail.com" },
-                new SubmittedImage { Id = 4, Month = 5, Name = "EersteImage", Image = new byte[] { 0x20, 0x20 }, Creator = "joery@hotmail.com" },
-                new SubmittedImage { Id = 5, Month = 5, Name = "TweedeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20 }, Creator = "davy@hotmail.com" },
-                new SubmittedImage { Id = 6, Month = 5, Name = "DerdeImage", Image = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20 }, Creator = "tai@hotmail.com" }
+                createImage(1, 4, "EersteImageApril", new byte[] { 0x20, 0x20 }, 5, "lindsay@hotmail.com" ),
+                createImage(2, 4, "TweedeImageApril", new byte[] { 0x20, 0x20 }, 3, "noukie@hotmail.com"),
+                createImage(3, 4, "DerdeImageApril", new byte[] { 0x20, 0x20 }, 3, "slam@hotmail.com"),
+                createImage(4, 5, "EersteImageMei", new byte[] { 0x20, 0x20 }, 0, "joery@hotmail.com"),
+                createImage(5, 5, "EersteImageMei", new byte[] { 0x20, 0x20 }, 0, "davy@hotmail.com"),
+                createImage(6, 5, "EersteImageMei", new byte[] { 0x20, 0x20 }, 0, "tai@hotmail.com")
                 );
 
             modelBuilder.Entity<Score>().HasData(
@@ -45,6 +45,17 @@ namespace perfectPixelApi.Data
                 .withSubmittedImageId(submittedImageId)
                 .withImageScore(imageScore)
                 .withVoter(voter)
+                .Build();
+        }
+        private SubmittedImage createImage(int id,  byte month, string name, byte[] image, byte averageScore,  string creator)
+        {
+            return SubmittedImage.GetBuilder()
+                .withId(id)
+                .withName(name)
+                .withMonth(month)
+                .withAverageScore(averageScore)
+                .withImage(image)
+                .withCreator(creator)
                 .Build();
         }
     }

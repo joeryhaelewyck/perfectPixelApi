@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace perfectPixelApi.Repositories
@@ -23,12 +21,53 @@ namespace perfectPixelApi.Repositories
         public string Creator { get; set; }
 
         public SubmittedImage() { }
-        public SubmittedImage(string name, byte month, byte[] image, string voter)
+        public static Builder GetBuilder()
         {
-            Name = name;
-            Month = month;
-            Image = image;
-            Creator = voter;
+            return new Builder();
         }
+
+        public class Builder
+        {
+            private readonly SubmittedImage _image = new SubmittedImage();
+
+            public Builder withId(int id)
+            {
+                _image.Id = id;
+                return this;
+            }
+
+            public Builder withName(string name)
+            {
+                _image.Name = name;
+                return this;
+            }
+
+            public Builder withMonth(byte month)
+            {
+                _image.Month = month;
+                return this;
+            }
+
+            public Builder withAverageScore(byte averageScore)
+            {
+                _image.Averagescore = averageScore;
+                return this;
+            }
+            public Builder withImage(byte[] image)
+            {
+                _image.Image = image;
+                return this;
+            }
+            public Builder withCreator(string creator)
+            {
+                _image.Creator = creator;
+                return this;
+            }
+            public SubmittedImage Build()
+            {
+                return _image;
+            }
+        }
+
     }
 }

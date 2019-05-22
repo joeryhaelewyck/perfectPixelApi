@@ -19,13 +19,14 @@ namespace perfectPixelApi.Controllers
             _scoreService = scoreService;
         }
         
+       
+        [HttpGet]
+        [Route("api/[controller]")]
         // GET: api/score/
         /// <summary>
         /// Get all the submitted scores
         /// </summary>
         /// <returns>array of scores </returns>
-        [HttpGet]
-        [Route("api/[controller]")]
         public IEnumerable<ScoreGetDTO> GetScores()
         {
             return _scoreService.GetAll();

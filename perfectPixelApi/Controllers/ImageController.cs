@@ -113,11 +113,12 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/")]
         public ActionResult<SubmittedImage> PostImage(SubmittedImageDTO submittedImageDTO)
         {
-            var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image, submittedImageDTO.Voter);
-            //imageToCreate.Id = _imageRepository.GetNewID();
-            _imageRepository.Add(imageToCreate);
-            _imageRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetImageById), new { id = imageToCreate.Id }, imageToCreate);
+            //var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image, submittedImageDTO.Voter);
+            ////imageToCreate.Id = _imageRepository.GetNewID();
+            //_imageRepository.Add(imageToCreate);
+            //_imageRepository.SaveChanges();
+            //return CreatedAtAction(nameof(GetImageById), new { id = imageToCreate.Id }, imageToCreate);
+            return null;
         }
         /// <summary>
         /// deletes an image from the database
@@ -142,19 +143,20 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<SubmittedImage> ChangeImage(int id, SubmittedImageDTO imageDTO)
         {
-            if(imageDTO == null)
-            {
-                return BadRequest("please insert information");
-            }
-            if(_imageRepository.GetById(id) == null)
-            {
-                return NotFound();
-            }
-            SubmittedImage imageToUpdate = new SubmittedImage(imageDTO.Name, imageDTO.Month,imageDTO.Image, imageDTO.Voter);
-            imageToUpdate.Id = id;
-            _imageRepository.Update(imageToUpdate);
-            _imageRepository.SaveChanges();
-            return imageToUpdate;
+            //if(imageDTO == null)
+            //{
+            //    return BadRequest("please insert information");
+            //}
+            //if(_imageRepository.GetById(id) == null)
+            //{
+            //    return NotFound();
+            //}
+            //SubmittedImage imageToUpdate = new SubmittedImage(imageDTO.Name, imageDTO.Month,imageDTO.Image, imageDTO.Voter);
+            //imageToUpdate.Id = id;
+            //_imageRepository.Update(imageToUpdate);
+            //_imageRepository.SaveChanges();
+            //return imageToUpdate;
+            return null;
         }
         /// <summary>
         /// updates specific properties from an image 
