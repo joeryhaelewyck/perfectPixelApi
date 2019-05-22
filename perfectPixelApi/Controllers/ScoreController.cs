@@ -26,7 +26,7 @@ namespace perfectPixelApi.Controllers
         /// <returns>array of scores </returns>
         [HttpGet]
         [Route("api/[controller]")]
-        public IEnumerable<ScoreDTO> GetScores()
+        public IEnumerable<ScoreGetDTO> GetScores()
         {
             return _scoreService.GetAll();
         }
@@ -38,10 +38,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>one specific score </returns>
         [HttpGet]
         [Route("api/[controller]/{id}")]
-        public ActionResult<Score> GetScoreById(int id)
+        public ActionResult<ScoreGetDTO> GetScoreById(int id)
         {
-            Score score = _scoreService.GetById(id);
-            return score;
+            return _scoreService.GetById(id);
         }
         // GET: api/score/imageid/2
         /// <summary>
@@ -51,7 +50,7 @@ namespace perfectPixelApi.Controllers
         /// <returns>array of scores </returns>
         [HttpGet]
         [Route("api/[controller]/imageid/{imageId}")]
-        public IEnumerable<Score> GetScoreForSpecificImage(int imageId)
+        public IEnumerable<ScoreGetDTO> GetScoreForSpecificImage(int imageId)
         {
             return _scoreService.GetByImageId(imageId);
         }
@@ -63,7 +62,7 @@ namespace perfectPixelApi.Controllers
         /// <returns>array of scores </returns>
         [HttpGet]
         [Route("api/[controller]/voter/{email}")]
-        public IEnumerable<Score> GetScoresForGivenVoter(string email)
+        public IEnumerable<ScoreGetDTO> GetScoresForGivenVoter(string email)
         {
             return _scoreService.GetByVoter(email);
         }
@@ -72,24 +71,9 @@ namespace perfectPixelApi.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/[controller]/")]
-        public ActionResult<Score> PostScore(ScoreDTO scoreDTO)
+        public ActionResult<Score> PostScore(ScorePutDTO scoreDTO)
         {
-            if (_scoreService.GetByImageIdAndVoter(scoreDTO.IdSubmittedImage, scoreDTO.Voter) != null)
-            {
-                return BadRequest("You already voted");
-            }
-            //if (_scoreService.GetById(scoreDTO.IdSubmittedImage).Creator == scoreDTO.Voter)
-            //{
-            //    return BadRequest("You can't vote on yourself!!!");
-            //}
-            Score scoreToCreate = new Score.Builder()
-                .withImageScore(scoreDTO.ImageScore)
-                .withSubmittedImageId(scoreDTO.IdSubmittedImage)
-                .withVoter(scoreDTO.Voter)
-                .Build();
-            _scoreService.Add(scoreToCreate);
-            _scoreService.SaveChanges();
-            return CreatedAtAction(nameof(GetScoreById), new { id = scoreToCreate.Id }, scoreToCreate);
+           return _scoreService.Add(scoreDTO);
         }
         ///// <summary>
         ///// changes the value of a score
@@ -106,8 +90,7 @@ namespace perfectPixelApi.Controllers
             {
                 return NotFound();
             }
-            Score currentScore = _scoreService.GetById(id);
-            return _scoreService.ApplyPatch(currentScore, scorePatch);
+            return _scoreService.ApplyPatch(id, scorePatch);
         }
 
     }

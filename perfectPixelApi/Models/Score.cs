@@ -12,7 +12,7 @@ namespace perfectPixelApi.Repositories
         [Column("IDSUBMITTEDIMAGE")]
         public int IdSubmittedImage { get; private set; }
         [Column("IMAGESCORE")]
-        public int ImageScore { get; private set; }
+        public int ImageScore { get; set; }
         [Required]
         [Column("VOTER")]
         [StringLength(50)]

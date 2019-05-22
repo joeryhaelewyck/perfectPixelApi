@@ -34,6 +34,7 @@ namespace perfectPixelApi
             services.AddScoped<IScoreRepository, ScoreRepository>();
             services.AddScoped<IScoreService,ScoreServiceImpl>(); 
 
+
             services.AddOpenApiDocument(c =>
             {
                 c.DocumentName = "apidocs";

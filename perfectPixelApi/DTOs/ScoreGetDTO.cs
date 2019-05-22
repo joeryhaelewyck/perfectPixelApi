@@ -1,12 +1,17 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace perfectPixelApi.DTOs
 {
-    public class ScoreDTO
+    public class ScoreGetDTO
     {
         [Required]
-        public int IdSubmittedImage {get; set;}
+        public int Id { get; set; }
+        [Required]
+        public int IdSubmittedImage { get; set; }
         [Required]
         public int ImageScore { get; set; }
         [Required]

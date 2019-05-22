@@ -5,13 +5,31 @@ namespace perfectPixelApi.Mappers
 {
     public class ScoreMapper
     {
-        public static ScoreDTO toDto(Score score)
+        public static ScorePutDTO toPutDto(Score score)
         {
-            ScoreDTO dto = new ScoreDTO();
+            ScorePutDTO dto = new ScorePutDTO();
             dto.ImageScore = score.ImageScore;
             dto.IdSubmittedImage = score.IdSubmittedImage;
             dto.Voter = score.Voter;
             return dto;
+        }
+        public static ScoreGetDTO toGetDto(Score score)
+        {
+            ScoreGetDTO dto = new ScoreGetDTO();
+            dto.Id = score.Id;
+            dto.ImageScore = score.ImageScore;
+            dto.IdSubmittedImage = score.IdSubmittedImage;
+            dto.Voter = score.Voter;
+            return dto;
+        }
+        public static Score toScore(ScorePutDTO dto)
+        {
+            Score score = new Score.Builder()
+                 .withSubmittedImageId(dto.IdSubmittedImage)
+                 .withImageScore(dto.ImageScore)
+                 .withVoter(dto.Voter)
+                 .Build();
+            return score;
         }
     }
 }

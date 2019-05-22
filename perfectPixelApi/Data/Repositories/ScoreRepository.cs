@@ -22,18 +22,6 @@ namespace perfectPixelApi.Data.Repositories
             _scores.Add(score);
         }
 
-        public Score ApplyPatch(Score currentScore, ScorePatchDTO scorePatch)
-        {
-            Score updateScore = new Score.Builder()
-                .withImageScore(scorePatch.ImageScore)
-                .withSubmittedImageId(currentScore.IdSubmittedImage)
-                .withVoter(currentScore.Voter)
-                .Build();
-            _scores.Update(updateScore);
-            SaveChanges();
-            return updateScore;
-        }
-
         public IEnumerable<Score> GetAll()
         {
             var scores = _scores.AsQueryable();
@@ -64,6 +52,11 @@ namespace perfectPixelApi.Data.Repositories
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
+        }
+
+        public void Update(Score score)
+        {
+            _scores.Update(score);
         }
     }
 }

@@ -15,44 +15,46 @@ namespace perfectPixelApi.Services.impl
             _scoreRepository = scoreRepository;
         }
 
-        public void Add(Score score)
+        public Score Add(ScorePutDTO scorePutDTO)
         {
+            Score score = ScoreMapper.toScore(scorePutDTO);
             _scoreRepository.Add(score);
-        }
-
-        public IEnumerable<ScoreDTO> GetAll()
-        {
-            return _scoreRepository.GetAll().Select(score => ScoreMapper.toDto(score));
-        }
-
-        public Score GetById(int id)
-        {
-            return _scoreRepository.GetById(id);
-        }
-
-        public IEnumerable<Score> GetByImageId(int imageId)
-        {
-            return _scoreRepository.GetByImageId(imageId);
-        }
-
-        public Score GetByImageIdAndVoter(int idSubmittedImage, string voter)
-        {
-            return _scoreRepository.GetByImageIdAndVoter(idSubmittedImage, voter);
-        }
-
-        public IEnumerable<Score> GetByVoter(string email)
-        {
-            return _scoreRepository.GetByVoter(email);
-        }
-
-        public void SaveChanges()
-        {
             _scoreRepository.SaveChanges();
+            return score;
         }
 
-        public Score ApplyPatch(Score currentScore, ScorePatchDTO scorePatch)
+        public IEnumerable<ScoreGetDTO> GetAll()
         {
-           return _scoreRepository.ApplyPatch(currentScore, scorePatch);
+            return _scoreRepository.GetAll().Select(score => ScoreMapper.toGetDto(score));
+        }
+
+        public ScoreGetDTO GetById(int id)
+        {
+            return ScoreMapper.toGetDto(_scoreRepository.GetById(id));
+        }
+
+        public IEnumerable<ScoreGetDTO> GetByImageId(int imageId)
+        {
+            return _scoreRepository.GetByImageId(imageId).Select(score => ScoreMapper.toGetDto(score));
+        }
+
+        public ScoreGetDTO GetByImageIdAndVoter(int idSubmittedImage, string voter)
+        {
+            return ScoreMapper.toGetDto(_scoreRepository.GetByImageIdAndVoter(idSubmittedImage, voter));
+        }
+
+        public IEnumerable<ScoreGetDTO> GetByVoter(string email)
+        {
+            return _scoreRepository.GetByVoter(email).Select(score => ScoreMapper.toGetDto(score));
+        }
+
+        public Score ApplyPatch(int id, ScorePatchDTO scorePatch)
+        {
+            Score currentScore = _scoreRepository.GetById(id);
+            currentScore.ImageScore = scorePatch.ImageScore;
+            _scoreRepository.Update(currentScore);
+            _scoreRepository.SaveChanges();
+            return currentScore;
         }
     }
 }

@@ -6,13 +6,12 @@ namespace perfectPixelApi.Services
 {
     public interface IScoreService
     {
-        IEnumerable<ScoreDTO> GetAll();
-        Score GetById(int id);
-        IEnumerable<Score> GetByImageId(int imageId);
-        IEnumerable<Score> GetByVoter(string email);
-        Score GetByImageIdAndVoter(int idSubmittedImage, string voter);
-        void Add(Score score);
-        void SaveChanges();
-        Score ApplyPatch(Score currentScore, ScorePatchDTO scorePatch);
+        IEnumerable<ScoreGetDTO> GetAll();
+        ScoreGetDTO GetById(int id);
+        IEnumerable<ScoreGetDTO> GetByImageId(int imageId);
+        IEnumerable<ScoreGetDTO> GetByVoter(string email);
+        ScoreGetDTO GetByImageIdAndVoter(int idSubmittedImage, string voter);
+        Score Add(ScorePutDTO scoreDTO);
+        Score ApplyPatch(int id, ScorePatchDTO scorePatch);
     }
 }
