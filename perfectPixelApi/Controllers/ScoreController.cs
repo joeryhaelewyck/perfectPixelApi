@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using perfectPixelApi.DTOs;
 using perfectPixelApi.Exceptions;
@@ -29,7 +26,6 @@ namespace perfectPixelApi.Controllers
 
         [HttpGet]
         [Route("api/[controller]")]
-
         public IEnumerable<ScoreGetDTO> GetScores()
         {
             try

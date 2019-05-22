@@ -26,7 +26,13 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]")]
         public IEnumerable<ImageGetDTO> GetImages()
         {
-            return _imageService.GetAll();
+            try
+            {
+                return _imageService.GetAll();
+            }
+            catch {
+                return null;
+            }
         }
         // GET: api/image/5
         /// <summary>
@@ -38,8 +44,13 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<ImageGetDTO> GetImageById(int id)
         {
-            return _imageService.GetImageById(id);
-            
+            try
+            {
+                return _imageService.GetImageById(id);
+            }
+            catch {
+                return BadRequest(); 
+            }
         }
         // GET: api/image/month/5
         /// <summary>
@@ -51,8 +62,13 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/month/{month}")]
         public IEnumerable<ImageGetDTO> GetImagesByMonth(byte month)
         {
-            return _imageService.GetImagesByMonth(month);
-
+            try
+            {
+                return _imageService.GetImagesByMonth(month);
+            }
+            catch {
+                return null;
+            }
         }
         // GET: api/image/name/jokkebrok
         /// <summary>
@@ -64,8 +80,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/name/{name}")]
         public IEnumerable<ImageGetDTO> GetImagesByName(string name)
         {
-            return _imageService.GetImagesByName(name);
-
+            try
+            {
+                return _imageService.GetImagesByName(name);
+            }
+            catch
+            {
+                return null;
+            }
         }
         // GET: api/image/highscore/5
         /// <summary>
@@ -77,8 +99,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/highscore/{month}")]
         public ActionResult<ImageGetDTO> GetImageWithHighestScoreForCertainMonth(byte month)
         {
-            return _imageService.GetImageByHighScoreByMonth(month);
-
+            try
+            {
+                return _imageService.GetImageByHighScoreByMonth(month);
+            }
+            catch
+            {
+                return null;
+            }
         }
         // GET: api/image/voter/joeryhaelewyck@hotmail.com/month/5
         /// <summary>
@@ -91,8 +119,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/voter/{voter}/month/{month}")]
         public ActionResult<ImageGetDTO> GetImagesByVoterbyMonth(string voter, byte month)
         {
-            return _imageService.GetImageByVoterByMonth(voter, month);
-
+            try
+            {
+                return _imageService.GetImageByVoterByMonth(voter, month);
+            }
+            catch
+            {
+                return null;
+            }
         }
         /// <summary>
         /// Adds an image to the database
@@ -101,7 +135,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/")]
         public ActionResult<ImageGetDTO> PostImage(ImagePutDTO imageDTO)
         {
-            return _imageService.Add(imageDTO);
+            try
+            {
+                return _imageService.Add(imageDTO);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
         /// <summary>
         /// deletes an image from the database
@@ -110,7 +151,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<ImageGetDTO> DeleteImage(int id)
         {
-            return _imageService.Delete(id);
+            try
+            {
+                return _imageService.Delete(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
         /// <summary>
         /// updates an image 
@@ -119,7 +167,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<ImageGetDTO> ChangeImage(int id, ImagePutDTO imageDTO)
         {
-            return _imageService.Update(id, imageDTO);
+            try
+            {
+                return _imageService.Update(id, imageDTO);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
         /// <summary>
         /// updates specific properties from an image 
@@ -128,9 +183,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<ImageGetDTO> ChangeImageSpecificProperties(int id, ImagePatchDTO imagePatch)
         {
-           
-            return _imageService.ApplyPatch(id, imagePatch);
+            try
+            {
+                return _imageService.ApplyPatch(id, imagePatch);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
-
     }
 }
