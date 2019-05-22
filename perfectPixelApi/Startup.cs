@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 using perfectPixelApi.Data;
 using Microsoft.EntityFrameworkCore;
 using perfectPixelApi.Data.Repositories;

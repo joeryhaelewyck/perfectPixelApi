@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using perfectPixelApi.DTOs;
 using perfectPixelApi.Mappers;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 
 namespace perfectPixelApi.Services.impl
 {

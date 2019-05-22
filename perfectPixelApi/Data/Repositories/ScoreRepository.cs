@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using perfectPixelApi.DTOs;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 

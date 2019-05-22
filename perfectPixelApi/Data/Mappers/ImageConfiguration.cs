@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

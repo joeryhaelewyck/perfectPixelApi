@@ -1,4 +1,4 @@
-﻿using perfectPixelApi.Repositories;
+﻿using perfectPixelApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using NSwag.Annotations;
@@ -111,7 +111,7 @@ namespace perfectPixelApi.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/[controller]/")]
-        public ActionResult<SubmittedImage> PostImage(SubmittedImageDTO submittedImageDTO)
+        public ActionResult<SubmittedImage> PostImage(ImagePutDTO imageDTO)
         {
             //var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image, submittedImageDTO.Voter);
             ////imageToCreate.Id = _imageRepository.GetNewID();
@@ -141,7 +141,7 @@ namespace perfectPixelApi.Controllers
         /// </summary>
         [HttpPut]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> ChangeImage(int id, SubmittedImageDTO imageDTO)
+        public ActionResult<SubmittedImage> ChangeImage(int id, ImagePutDTO imageDTO)
         {
             //if(imageDTO == null)
             //{

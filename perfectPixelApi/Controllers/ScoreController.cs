@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using perfectPixelApi.DTOs;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 using perfectPixelApi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

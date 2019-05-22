@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using perfectPixelApi.DTOs;
 
-namespace perfectPixelApi.Repositories
+namespace perfectPixelApi.Models
 {
     public interface IScoreRepository
     {

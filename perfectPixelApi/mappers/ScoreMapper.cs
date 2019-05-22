@@ -1,5 +1,5 @@
 using perfectPixelApi.DTOs;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 
 namespace perfectPixelApi.Mappers
 {

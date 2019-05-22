@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using perfectPixelApi.DTOs;
-using perfectPixelApi.Repositories;
+using perfectPixelApi.Models;
 
 namespace perfectPixelApi.Data.Repositories
 {
