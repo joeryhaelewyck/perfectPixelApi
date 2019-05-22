@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using perfectPixelApi.DTOs;
+using perfectPixelApi.Exceptions;
 using perfectPixelApi.Mappers;
 using perfectPixelApi.Models;
 
@@ -15,7 +17,6 @@ namespace perfectPixelApi.Services.Impl
             _scoreRepository = scoreRepository;
         }
 
-       
         public IEnumerable<ScoreGetDTO> GetAll()
         {
             return _scoreRepository.GetAll().Select(score => ScoreMapper.toGetDto(score));
@@ -23,6 +24,10 @@ namespace perfectPixelApi.Services.Impl
 
         public ScoreGetDTO GetById(int id)
         {
+            if(_scoreRepository.GetById(id) == null)
+            {
+                throw new ScoreNotFoundException();
+            }
             return ScoreMapper.toGetDto(_scoreRepository.GetById(id));
         }
 
@@ -51,7 +56,12 @@ namespace perfectPixelApi.Services.Impl
 
         public ScoreGetDTO ApplyPatch(int id, ScorePatchDTO scorePatch)
         {
+
             Score currentScore = _scoreRepository.GetById(id);
+            if (currentScore == null)
+            {
+                throw new ScoreNotFoundException();
+            }
             currentScore.ImageScore = scorePatch.ImageScore;
             _scoreRepository.Update(currentScore);
             _scoreRepository.SaveChanges();

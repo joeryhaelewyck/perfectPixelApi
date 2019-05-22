@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using perfectPixelApi.DTOs;
+using perfectPixelApi.Exceptions;
 using perfectPixelApi.Services;
 
 namespace perfectPixelApi.Controllers
@@ -25,10 +29,17 @@ namespace perfectPixelApi.Controllers
 
         [HttpGet]
         [Route("api/[controller]")]
-        
+
         public IEnumerable<ScoreGetDTO> GetScores()
         {
-            return _scoreService.GetAll();
+            try
+            {
+                return _scoreService.GetAll();
+            }
+            catch
+            {
+                return null;
+            }
         }
         // GET: api/score/1
         /// <summary>
@@ -40,7 +51,19 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<ScoreGetDTO> GetScoreById(int id)
         {
-            return _scoreService.GetById(id);
+            try
+            {
+                return _scoreService.GetById(id);
+            }
+            catch (ScoreNotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
         }
         // GET: api/score/imageid/2
         /// <summary>
@@ -52,7 +75,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/imageid/{imageId}")]
         public IEnumerable<ScoreGetDTO> GetScoreForSpecificImage(int imageId)
         {
-            return _scoreService.GetByImageId(imageId);
+            try
+            {
+                return _scoreService.GetByImageId(imageId);
+            }
+            catch
+            {
+                return null;
+            }
         }
         // GET: api/score/voter/joeryhaelewyck@hotmail.com
         /// <summary>
@@ -64,7 +94,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/voter/{email}")]
         public IEnumerable<ScoreGetDTO> GetScoresForGivenVoter(string email)
         {
-            return _scoreService.GetByVoter(email);
+            try
+            {
+                return _scoreService.GetByVoter(email);
+            }
+            catch
+            {
+                return null;
+            }
         }
         /// <summary>
         /// Adds an score to the database
@@ -73,7 +110,14 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/")]
         public ActionResult<ScoreGetDTO> PostScore(ScorePutDTO scoreDTO)
         {
-           return _scoreService.Add(scoreDTO);
+            try
+            {
+                return _scoreService.Add(scoreDTO);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
         ///// <summary>
         ///// changes the value of a score
@@ -82,16 +126,18 @@ namespace perfectPixelApi.Controllers
         [Route("api/[controller]/{id}")]
         public ActionResult<ScoreGetDTO> PatchScore(int id, ScorePatchDTO scorePatch)
         {
-            if (scorePatch == null)
+            try
             {
-                return BadRequest("please insert information");
+                return _scoreService.ApplyPatch(id, scorePatch);
             }
-            if (_scoreService.GetById(id) == null)
+            catch (ScoreNotFoundException)
             {
                 return NotFound();
             }
-            return _scoreService.ApplyPatch(id, scorePatch);
+            catch 
+            {
+                return BadRequest();
+            }
         }
-
     }
 }
