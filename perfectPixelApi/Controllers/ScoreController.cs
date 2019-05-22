@@ -3,29 +3,29 @@ using Microsoft.AspNetCore.Mvc;
 using perfectPixelApi.DTOs;
 using perfectPixelApi.Services;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace perfectPixelApi.Controllers
 {
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Produces("application/json")]
+    [ApiController]
     public class ScoreController : ControllerBase
     {
         private readonly IScoreService _scoreService;
 
-            public ScoreController(IScoreService scoreService)
+        public ScoreController(IScoreService scoreService)
         {
             _scoreService = scoreService;
         }
-        
-       
-        [HttpGet]
-        [Route("api/[controller]")]
-        // GET: api/score/
+
+        // GET: api/Scores
         /// <summary>
         /// Get all the submitted scores
         /// </summary>
         /// <returns>array of scores </returns>
+
+        [HttpGet]
+        [Route("api/[controller]")]
+        
         public IEnumerable<ScoreGetDTO> GetScores()
         {
             return _scoreService.GetAll();
