@@ -25,7 +25,7 @@ namespace perfectPixelApi.Data.Repositories
             }
            
         }
-
+ 
         public void Delete(SubmittedImage image)
         {
             _images.Remove(image);
@@ -37,12 +37,12 @@ namespace perfectPixelApi.Data.Repositories
             return images.OrderBy(i => i.Name).ToList();
         }
 
-        public SubmittedImage GetById(int id)
+        public SubmittedImage GetImageById(int id)
         {
             return _images.SingleOrDefault(i => i.Id == id);
         }
 
-        public IEnumerable<SubmittedImage> GetByName(string name)
+        public IEnumerable<SubmittedImage> GetImagesByName(string name)
         {
             return _images.Where(i => i.Name == name);
         }
@@ -78,7 +78,7 @@ namespace perfectPixelApi.Data.Repositories
             return _images.Where(i => i.Month == month).FirstOrDefault(i => i.Creator == mail);
         }
 
-        public IEnumerable<SubmittedImage> GetImageByVoter(string mail)
+        public IEnumerable<SubmittedImage> GetImagesByVoter(string mail)
         {
             throw new System.NotImplementedException();
         }

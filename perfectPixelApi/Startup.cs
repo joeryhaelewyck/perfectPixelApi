@@ -8,7 +8,7 @@ using perfectPixelApi.Data;
 using Microsoft.EntityFrameworkCore;
 using perfectPixelApi.Data.Repositories;
 using perfectPixelApi.Services;
-using perfectPixelApi.Services.impl;
+using perfectPixelApi.Services.Impl;
 
 namespace perfectPixelApi
 {
@@ -32,8 +32,8 @@ namespace perfectPixelApi
             services.AddScoped<ImageDataInitializer>();
             services.AddScoped<ISubmittedImageRepository, SubmittedImageRepository>();
             services.AddScoped<IScoreRepository, ScoreRepository>();
-            services.AddScoped<IScoreService,ScoreServiceImpl>(); 
-
+            services.AddScoped<IScoreService,ScoreService>();
+            services.AddScoped<ISubmittedImageService, SubmittedImageService>();
 
             services.AddOpenApiDocument(c =>
             {

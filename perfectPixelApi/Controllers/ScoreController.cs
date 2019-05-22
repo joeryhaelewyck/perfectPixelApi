@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using perfectPixelApi.DTOs;
-using perfectPixelApi.Models;
 using perfectPixelApi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -72,7 +71,7 @@ namespace perfectPixelApi.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/[controller]/")]
-        public ActionResult<Score> PostScore(ScorePutDTO scoreDTO)
+        public ActionResult<ScoreGetDTO> PostScore(ScorePutDTO scoreDTO)
         {
            return _scoreService.Add(scoreDTO);
         }
@@ -81,7 +80,7 @@ namespace perfectPixelApi.Controllers
         ///// </summary>
         [HttpPatch]
         [Route("api/[controller]/{id}")]
-        public ActionResult<Score> PatchScore(int id, ScorePatchDTO scorePatch)
+        public ActionResult<ScoreGetDTO> PatchScore(int id, ScorePatchDTO scorePatch)
         {
             if (scorePatch == null)
             {

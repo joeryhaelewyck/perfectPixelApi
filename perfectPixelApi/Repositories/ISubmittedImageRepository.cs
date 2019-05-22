@@ -6,14 +6,14 @@ namespace perfectPixelApi.Models
     public interface ISubmittedImageRepository
     {
         
-        SubmittedImage GetById(int id);
+        SubmittedImage GetImageById(int id);
         SubmittedImage GetImageByHighScoreByMonth(byte month);
         SubmittedImage GetImageByVoterByMonth(string mail, byte month);
         SubmittedImage ApplyPatch(SubmittedImage submittedImage, ImagePatchDTO imagePatch);
-        IEnumerable<SubmittedImage> GetByName(string name);
+        IEnumerable<SubmittedImage> GetImagesByName(string name);
         IEnumerable<SubmittedImage> GetAll();
         IEnumerable<SubmittedImage> GetImagesByMonth(byte month);
-        IEnumerable<SubmittedImage> GetImageByVoter(string mail);
+        IEnumerable<SubmittedImage> GetImagesByVoter(string mail);
 
         int GetNewID();
         void Add(SubmittedImage image);

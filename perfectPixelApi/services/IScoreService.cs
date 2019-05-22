@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using perfectPixelApi.DTOs;
-using perfectPixelApi.Models;
 
 namespace perfectPixelApi.Services
 {
     public interface IScoreService
     {
-        IEnumerable<ScoreGetDTO> GetAll();
         ScoreGetDTO GetById(int id);
+        ScoreGetDTO GetByImageIdAndVoter(int idSubmittedImage, string voter);
+
+        IEnumerable<ScoreGetDTO> GetAll();
         IEnumerable<ScoreGetDTO> GetByImageId(int imageId);
         IEnumerable<ScoreGetDTO> GetByVoter(string email);
-        ScoreGetDTO GetByImageIdAndVoter(int idSubmittedImage, string voter);
-        Score Add(ScorePutDTO scoreDTO);
-        Score ApplyPatch(int id, ScorePatchDTO scorePatch);
+
+        ScoreGetDTO Add(ScorePutDTO scoreDTO);
+        ScoreGetDTO ApplyPatch(int id, ScorePatchDTO scorePatch);
     }
 }

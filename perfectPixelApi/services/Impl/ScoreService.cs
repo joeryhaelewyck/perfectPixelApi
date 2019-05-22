@@ -4,25 +4,18 @@ using perfectPixelApi.DTOs;
 using perfectPixelApi.Mappers;
 using perfectPixelApi.Models;
 
-namespace perfectPixelApi.Services.impl
+namespace perfectPixelApi.Services.Impl
 {
-    public class ScoreServiceImpl : IScoreService
+    public class ScoreService : IScoreService
     {
         private readonly IScoreRepository _scoreRepository;
 
-        public ScoreServiceImpl(IScoreRepository scoreRepository)
+        public ScoreService(IScoreRepository scoreRepository)
         {
             _scoreRepository = scoreRepository;
         }
 
-        public Score Add(ScorePutDTO scorePutDTO)
-        {
-            Score score = ScoreMapper.toScore(scorePutDTO);
-            _scoreRepository.Add(score);
-            _scoreRepository.SaveChanges();
-            return score;
-        }
-
+       
         public IEnumerable<ScoreGetDTO> GetAll()
         {
             return _scoreRepository.GetAll().Select(score => ScoreMapper.toGetDto(score));
@@ -48,13 +41,22 @@ namespace perfectPixelApi.Services.impl
             return _scoreRepository.GetByVoter(email).Select(score => ScoreMapper.toGetDto(score));
         }
 
-        public Score ApplyPatch(int id, ScorePatchDTO scorePatch)
+        public ScoreGetDTO Add(ScorePutDTO scorePutDTO)
+        {
+            Score score = ScoreMapper.toScore(scorePutDTO);
+            _scoreRepository.Add(score);
+            _scoreRepository.SaveChanges();
+            return ScoreMapper.toGetDto(score);
+        }
+
+        public ScoreGetDTO ApplyPatch(int id, ScorePatchDTO scorePatch)
         {
             Score currentScore = _scoreRepository.GetById(id);
             currentScore.ImageScore = scorePatch.ImageScore;
             _scoreRepository.Update(currentScore);
             _scoreRepository.SaveChanges();
-            return currentScore;
+            return ScoreMapper.toGetDto(currentScore);
         }
+
     }
 }

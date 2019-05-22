@@ -25,10 +25,9 @@ namespace perfectPixelApi.Mappers
             dto.Creator = submittedImage.Creator;
             return dto;
         }
-        public static SubmittedImage toSubmittedImage(ImageGetDTO dto)
+        public static SubmittedImage toSubmittedImage(ImagePutDTO dto)
         {
             SubmittedImage image = new SubmittedImage.Builder()
-                 .withId(dto.Id)
                  .withName(dto.Name)
                  .withMonth(dto.Month)
                  .withImage(dto.Image)

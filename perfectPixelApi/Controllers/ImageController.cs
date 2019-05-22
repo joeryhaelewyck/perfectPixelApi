@@ -1,8 +1,7 @@
-﻿using perfectPixelApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using NSwag.Annotations;
 using perfectPixelApi.DTOs;
+using perfectPixelApi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,11 +12,11 @@ namespace perfectPixelApi.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
-        private readonly ISubmittedImageRepository _imageRepository;
+        private readonly ISubmittedImageService _imageService;
 
-        public ImageController(ISubmittedImageRepository context)
+        public ImageController(ISubmittedImageService imageService)
         {
-            _imageRepository = context;
+            _imageService = imageService;
 
         }
         // GET: api/image
@@ -27,9 +26,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>array of images</returns>
         [HttpGet]
         [Route("api/[controller]")]
-        public IEnumerable<SubmittedImage> GetImages()
+        public IEnumerable<ImageGetDTO> GetImages()
         {
-            return _imageRepository.GetAll();
+            return _imageService.GetAll();
         }
         // GET: api/image/5
         /// <summary>
@@ -39,14 +38,10 @@ namespace perfectPixelApi.Controllers
         /// <returns>The image</returns>
         [HttpGet]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> GetImageById(int id)
+        public ActionResult<ImageGetDTO> GetImageById(int id)
         {
-            SubmittedImage image = _imageRepository.GetById(id);
-            if (image == null)
-            {
-                return NotFound();
-            }
-            return image;
+            return _imageService.GetImageById(id);
+            
         }
         // GET: api/image/month/5
         /// <summary>
@@ -56,9 +51,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>The image</returns>
         [HttpGet]
         [Route("api/[controller]/month/{month}")]
-        public IEnumerable<SubmittedImage> GetImagesByMonth(byte month)
+        public IEnumerable<ImageGetDTO> GetImagesByMonth(byte month)
         {
-            return _imageRepository.GetImagesByMonth(month);
+            return _imageService.GetImagesByMonth(month);
 
         }
         // GET: api/image/name/jokkebrok
@@ -69,9 +64,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>array of images </returns>
         [HttpGet]
         [Route("api/[controller]/name/{name}")]
-        public IEnumerable<SubmittedImage> GetImagesByName(string name)
+        public IEnumerable<ImageGetDTO> GetImagesByName(string name)
         {
-            return _imageRepository.GetByName(name);
+            return _imageService.GetImagesByName(name);
 
         }
         // GET: api/image/highscore/5
@@ -82,9 +77,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>The image with the highest score for the given month</returns>
         [HttpGet]
         [Route("api/[controller]/highscore/{month}")]
-        public ActionResult<SubmittedImage> GetImageWithHighestScoreForCertainMonth(byte month)
+        public ActionResult<ImageGetDTO> GetImageWithHighestScoreForCertainMonth(byte month)
         {
-            return _imageRepository.GetImageByHighScoreByMonth(month);
+            return _imageService.GetImageByHighScoreByMonth(month);
 
         }
         // GET: api/image/voter/joeryhaelewyck@hotmail.com/month/5
@@ -96,14 +91,9 @@ namespace perfectPixelApi.Controllers
         /// <returns>The image with the highest score for the given month</returns>
         [HttpGet]
         [Route("api/[controller]/voter/{voter}/month/{month}")]
-        public ActionResult<SubmittedImage> GetImagesByVoterbyMonth(string voter, byte month)
+        public ActionResult<ImageGetDTO> GetImagesByVoterbyMonth(string voter, byte month)
         {
-            SubmittedImage image = _imageRepository.GetImageByVoterByMonth(voter,month);
-            if (image == null)
-            {
-                return NotFound();
-            }
-            return image;
+            return _imageService.GetImageByVoterByMonth(voter, month);
 
         }
         /// <summary>
@@ -111,69 +101,37 @@ namespace perfectPixelApi.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/[controller]/")]
-        public ActionResult<SubmittedImage> PostImage(ImagePutDTO imageDTO)
+        public ActionResult<ImageGetDTO> PostImage(ImagePutDTO imageDTO)
         {
-            //var imageToCreate = new SubmittedImage(submittedImageDTO.Name, submittedImageDTO.Month, submittedImageDTO.Image, submittedImageDTO.Voter);
-            ////imageToCreate.Id = _imageRepository.GetNewID();
-            //_imageRepository.Add(imageToCreate);
-            //_imageRepository.SaveChanges();
-            //return CreatedAtAction(nameof(GetImageById), new { id = imageToCreate.Id }, imageToCreate);
-            return null;
+            return _imageService.Add(imageDTO);
         }
         /// <summary>
         /// deletes an image from the database
         /// </summary>
         [HttpDelete]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> DeleteImage(int id)
+        public ActionResult<ImageGetDTO> DeleteImage(int id)
         {
-            SubmittedImage image = _imageRepository.GetById(id);
-            if (image == null)
-            {
-                return NotFound();
-            }
-            _imageRepository.Delete(image);
-            _imageRepository.SaveChanges();
-            return image;
+            return _imageService.Delete(id);
         }
         /// <summary>
         /// updates an image 
         /// </summary>
         [HttpPut]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> ChangeImage(int id, ImagePutDTO imageDTO)
+        public ActionResult<ImageGetDTO> ChangeImage(int id, ImagePutDTO imageDTO)
         {
-            //if(imageDTO == null)
-            //{
-            //    return BadRequest("please insert information");
-            //}
-            //if(_imageRepository.GetById(id) == null)
-            //{
-            //    return NotFound();
-            //}
-            //SubmittedImage imageToUpdate = new SubmittedImage(imageDTO.Name, imageDTO.Month,imageDTO.Image, imageDTO.Voter);
-            //imageToUpdate.Id = id;
-            //_imageRepository.Update(imageToUpdate);
-            //_imageRepository.SaveChanges();
-            //return imageToUpdate;
-            return null;
+            return _imageService.Update(id, imageDTO);
         }
         /// <summary>
         /// updates specific properties from an image 
         /// </summary>
         [HttpPatch]
         [Route("api/[controller]/{id}")]
-        public ActionResult<SubmittedImage> ChangeImageSpecificProperties(int id, ImagePatchDTO imagePatch) {
-            if(imagePatch == null)
-            {
-                return BadRequest("please insert information");
-            }
-            if (_imageRepository.GetById(id) == null)
-            {
-                return NotFound();
-            }
-            SubmittedImage currentImage = _imageRepository.GetById(id);
-            return _imageRepository.ApplyPatch(currentImage, imagePatch);
+        public ActionResult<ImageGetDTO> ChangeImageSpecificProperties(int id, ImagePatchDTO imagePatch)
+        {
+           
+            return _imageService.ApplyPatch(id, imagePatch);
         }
 
     }
